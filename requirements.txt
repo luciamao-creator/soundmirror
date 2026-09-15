@@ -1,0 +1,21 @@
+# SoundMirror / 声镜 — Python 依赖
+# 运行环境:Python 3.11+
+#
+# 安装:
+#   pip install -r requirements.txt
+#
+# 系统依赖(非 Python,需 apt/brew 单独装):
+#   - ffmpeg ≥ 4.4  (音频时长探测 / 静音生成 / 格式转换)
+
+# === 测试 ===
+pytest>=7.0,<10.0
+
+# === 第三方运行时依赖 ===
+# 当前 v0 全部用 Mock + stdlib,**没有任何强制第三方运行时依赖**。
+# 接入真实音乐后端时,在此追加:
+#   requests>=2.28        # Matrix Music API
+#   websockets>=11.0      # YuE2 streaming
+#
+# Lark/飞书 HTTP 调用当前用 stdlib urllib。
+# 接入飞书官方 SDK 时,在此追加:
+#   lark-oapi>=1.2.0
