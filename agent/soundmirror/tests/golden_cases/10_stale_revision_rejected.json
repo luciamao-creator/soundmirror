@@ -1,0 +1,72 @@
+{
+  "case_id": "stale_revision_rejected",
+  "description": "LLM 用了过期的 state_revision,State Store 必须拒绝(乐观锁)",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p0_5", "optimistic_lock", "concurrency"],
+  "purpose": "V2 评审 P0-5:StateMutation 必须带 expected_revision,过期必须拒绝",
+  "preconditions": {
+    "current_state_revision": 12,
+    "current_ledger": {"stage": "VARIABLE_SETUP"}
+  },
+  "scenario": [
+    {
+      "step": "T1",
+      "actor": "User A (chat_xxx)",
+      "action": "提交 variable.change",
+      "read_revision_before_llm_call": 12
+    },
+    {
+      "step": "T2",
+      "concurrent_actor": "User B (same chat, but somehow another request)",
+      "happens": "提交另一个 variable.change,先一步到达 State Store",
+      "store_action": "应用 revision 12 → 13",
+      "store_revision_after_t2": 13
+    },
+    {
+      "step": "T3",
+      "actor": "User A LLM response arrives",
+      "state_mutation": {
+        "expected_revision": 12,
+        "operations": [{"op": "set", "path": "/music_spec/bpm", "value": 88}]
+      },
+      "store_check": "expected_revision (12) != current (13)",
+      "store_response": {
+        "status": 409,
+        "error": "CONFLICT_STALE_REVISION",
+        "current_state": "full ledger at revision 13"
+      },
+      "llm_must_NOT_have_executed_mutation": true
+    },
+    {
+      "step": "T4",
+      "llm_must_retry": {
+        "action": "读 ledger at revision 13,重新生成 state_mutation with expected_revision=14",
+        "must_resolve_conflict": "如果 LLM 修改的内容和 User B 的修改冲突,重新生成;否则直接应用"
+      }
+    }
+  ],
+  "state_store_contract": {
+    "must_validate_expected_revision": true,
+    "must_be_atomic": true,
+    "on_conflict_return_409_with_current_state": true,
+    "do_NOT_partial_apply_operations": true
+  },
+  "must_not_happen": [
+    "apply mutation with stale revision (race condition overwrite)",
+    "silent overwrite latest state",
+    "skip validation and just write"
+  ],
+  "right_behaviors": [
+    "State Store 拒绝 stale mutation,返回 409 + 当前 state",
+    "LLM 收到 409 后重新读 + 重新生成 mutation",
+    "Mavis mavis_session_data 在 audit log 中保留所有 rejected attempts"
+  ],
+  "audit_log_required": [
+    {"field": "rejected_mutation_id", "value": "mu_xxx"},
+    {"field": "rejected_expected_revision", "value": 12},
+    {"field": "actual_revision_at_reject_time", "value": 13},
+    {"field": "actor_user_id", "value": "u_xxx"},
+    {"field": "creative_session_id", "value": "cs_xxx"}
+  ]
+}

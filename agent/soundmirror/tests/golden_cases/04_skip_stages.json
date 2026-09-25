@@ -1,0 +1,51 @@
+{
+  "case_id": "skip_stages",
+  "description": "用户跳过多个 stage 直接生成,所有跳过的字段用 system_default 标记",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["skip", "default_values", "explicit_marking"],
+  "input": {
+    "user_messages": [
+      "开始",
+      "直接生成,民谣风格就行,其他用默认",
+      "确认提案",
+      "确认变量",
+      "生成"
+    ],
+    "user_actions": [
+      {"action_id": "session.start", "payload": {}},
+      {"action_id": "archaeology.skip", "payload": {}},
+      {"action_id": "identity.skip", "payload": {}},
+      {"action_id": "proposal.confirm", "payload": {"after_skip": true}},
+      {"action_id": "variable.confirm", "payload": {"after_skip": true}},
+      {"action_id": "generation.start", "payload": {"minimum_info_met": true}}
+    ]
+  },
+  "expected_flow": [
+    {"step": 1, "stage_after": "NEW", "card_type": "question"},
+    {"step": 2, "stage_after": "ARCHAEOLOGY", "card_type": "summary", "must_show_source": "system_default", "must_explain_skip": true},
+    {"step": 3, "stage_after": "IDENTITY_FITTING", "card_type": "sample", "must_show_source": "system_default"},
+    {"step": 4, "stage_after": "PROPOSAL_REVIEW", "card_type": "proposal", "must_warn": "很多字段是默认值,审阅时重点确认"},
+    {"step": 5, "stage_after": "VARIABLE_SETUP", "card_type": "variable", "must_show": "所有字段 source = system_default", "must_offer_change": true},
+    {"step": 6, "stage_after": "CANDIDATE_GENERATING", "card_type": "generation"}
+  ],
+  "expected_ledger": {
+    "archaeology": {"summary": "用户跳过", "confirmed": false, "source": "system_default"},
+    "identity_anchors": [],
+    "music_spec": {
+      "creative_intent": {"source": "system_default"},
+      "music": {"source": "system_default"}
+    }
+  },
+  "must_happen": [
+    "every skipped field has explicit source = 'system_default'",
+    "variable_setup offers user chance to change any field",
+    "user can see ALL defaults in one place before confirming",
+    "proposal warns user that defaults may not match their intent"
+  ],
+  "must_not_happen": [
+    "skip without showing source marking",
+    "use random defaults without user awareness",
+    "auto-generate without showing what defaults were chosen"
+  ]
+}

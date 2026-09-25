@@ -1,0 +1,122 @@
+{
+  "case_id": "rights_not_confirmed_disables_literal_embed",
+  "description": "未完成权利确认的素材只能 reference_only,不能 literal_embed;含第三方声音的永远不能 literal_embed",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p1_7", "rights", "privacy", "literal_embed"],
+  "purpose": "V2 评审 P1-7:个人素材权利确认必须显式,缺失则禁用 literal_embed",
+  "preconditions": {
+    "sound_asset_schema_required_fields": [
+      "rights_status",
+      "contains_third_party_voice",
+      "usage_scope",
+      "retention_scope",
+      "consent_confirmed_at",
+      "derived_asset_ids"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "rights_1_no_consent",
+      "description": "用户上传录音但没确认权利,Agent 拒绝 literal_embed",
+      "input": {
+        "asset_id": "asset_voice_xxx",
+        "uploaded": true,
+        "consent_confirmed_at": null,
+        "rights_status": null
+      },
+      "expected_behavior": {
+        "literal_embed_option_NOT_offered": true,
+        "available_levels": ["reference_only", "semantic_translation"],
+        "literal_embed_explanation": "需要你确认权利后才能使用",
+        "ask_user_for_consent": true,
+        "required_fields_before_literal_embed": ["rights_status", "consent_confirmed_at"]
+      }
+    },
+    {
+      "id": "rights_2_third_party_voice",
+      "description": "录音含第三方声音,即使用户确认也不能 literal_embed",
+      "input": {
+        "asset_id": "asset_with_other_voice_xxx",
+        "contains_third_party_voice": true,
+        "consent_confirmed_at": "2026-09-16T...",
+        "rights_status": "user_owned"
+      },
+      "expected_behavior": {
+        "literal_embed_option_NOT_offered": true,
+        "reason": "录音含他人声音,无法证明完整授权",
+        "available_levels": ["reference_only", "semantic_translation"],
+        "third_party_warning_shown": true
+      }
+    },
+    {
+      "id": "rights_3_user_owned_full_consent",
+      "description": "用户拥有权利且完成确认,提供 literal_embed 选项(但仍需 M1 CAP-16 验证)",
+      "input": {
+        "asset_id": "asset_my_voice_xxx",
+        "contains_third_party_voice": false,
+        "consent_confirmed_at": "2026-09-16T...",
+        "rights_status": "user_owned",
+        "usage_scope": "this_song_only",
+        "retention_scope": "until_user_delete"
+      },
+      "expected_behavior": {
+        "literal_embed_option_offered_with_disclaimer": true,
+        "disclaimer": "literal_embed 待 CAP-16 验证,M1 暂未启用"
+      }
+    },
+    {
+      "id": "rights_4_deletion_cascade",
+      "description": "用户删除素材,所有 derived_assets 必须清理",
+      "input": {
+        "asset_id": "asset_xxx",
+        "derived_asset_ids": ["asset_derived_1", "asset_derived_2"],
+        "action": "delete"
+      },
+      "expected_behavior": {
+        "delete_original": true,
+        "delete_all_derived": true,
+        "no_residual_data": true,
+        "audit_log": "asset_deletion_cascade: asset_xxx + 2 derived"
+      }
+    },
+    {
+      "id": "rights_5_retention_scope",
+      "description": "用户选 retention_scope=until_user_delete,系统必须在用户账号删除时清理",
+      "input": {
+        "retention_scope": "until_user_delete"
+      },
+      "expected_behavior": {
+        "user_account_deletion_triggers": "asset cleanup",
+        "no_zombie_assets": true
+      }
+    }
+  ],
+  "consent_prompt_must_include": [
+    "你是否拥有这段录音的使用权?",
+    "录音是否含其他人的声音?",
+    "你希望素材的使用范围?(这首歌 / 你所有作品 / 仅当前会话)",
+    "你希望保留多久?(永久 / 直到账号注销 / 仅当前会话)",
+    "删除素材时,所有派生文件(混音 / 高光 / 引用)会一起删除,确认吗?"
+  ],
+  "sound_asset_schema_required": {
+    "rights_status_enum": ["user_owned", "user_authorized", "third_party_unverified"],
+    "contains_third_party_voice_type": "boolean",
+    "usage_scope_enum": ["this_song_only", "this_user_only", "global"],
+    "retention_scope_enum": ["until_session_end", "until_user_delete", "forever"],
+    "consent_confirmed_at_type": "ISO-8601 | null",
+    "derived_asset_ids_type": "list[string]"
+  },
+  "must_not_happen": [
+    "没有 consent_confirmed_at 仍然使用 literal_embed",
+    "contains_third_party_voice=true 仍然 literal_embed",
+    "删除素材时遗留 derived_asset",
+    "用户不知情时把素材保存到 global"
+  ],
+  "right_behaviors": [
+    "literal_embed 必须等权利确认",
+    "含第三方声音的永远不能 literal_embed",
+    "删除必须 cascade 到所有派生",
+    "retention_scope=forever 时明确告知用户'永久保存'含义"
+  ]
+}

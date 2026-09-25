@@ -1,0 +1,439 @@
+{
+  "schema_version": "1.0",
+  "description": "SoundMirror Action 唯一注册表。SKILL.md、director.md、interpreter.md、proposal.md 必须引用此 catalog,不得自维护白名单。",
+  "risk_levels": {
+    "normal": "无副作用或可逆副作用,直接执行",
+    "costly": "消耗生成单元或预算,需确认",
+    "persistent": "写入长期人格或改作用域,需确认作用域",
+    "destructive": "永久删除,需二次确认 + 用户输入 '确认删除' 字样"
+  },
+  "actions": [
+    {
+      "action_id": "session.start",
+      "label": "开始 / 开新歌",
+      "allowed_stages": ["NEW"],
+      "payload_schema": {"mode": "string (new|continue)"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "session.pause",
+      "label": "暂停",
+      "allowed_stages": ["*"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "session.resume",
+      "label": "继续",
+      "allowed_stages": ["NEW"],
+      "payload_schema": {"creative_session_id": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "session.reset_all",
+      "label": "重置整个会话",
+      "allowed_stages": ["*"],
+      "payload_schema": {},
+      "risk": "destructive",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "typed_text_required",
+      "typed_text": "重置全部",
+      "consequence": "清空 ledger 当前会话"
+    },
+    {
+      "action_id": "stage.skip",
+      "label": "跳过当前阶段",
+      "allowed_stages": ["ARCHAEOLOGY", "IDENTITY_FITTING", "VARIABLE_SETUP"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "stage.back",
+      "label": "返回上一阶段",
+      "allowed_stages": ["*"],
+      "payload_schema": {"target_stage": "string (optional)"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "summary.request",
+      "label": "查看创作账本",
+      "allowed_stages": ["*"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "audio.play",
+      "label": "播放音频",
+      "allowed_stages": ["IDENTITY_FITTING", "HIGHLIGHT_REVIEW", "FULL_REVEAL"],
+      "payload_schema": {"asset_id": "string", "label": "string"},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "lyrics.show",
+      "label": "查看完整歌词",
+      "allowed_stages": ["PROPOSAL_REVIEW", "FULL_REVEAL"],
+      "payload_schema": {"scope": "string (full|section)", "section": "string (optional)"},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "archaeology.add",
+      "label": "添加素材",
+      "allowed_stages": ["ARCHAEOLOGY"],
+      "payload_schema": {"text": "string", "asset_refs": ["asset_xxx (optional)"]},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "archaeology.confirm",
+      "label": "确认考古完成",
+      "allowed_stages": ["ARCHAEOLOGY"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "identity.play",
+      "label": "播放身份样本",
+      "allowed_stages": ["IDENTITY_FITTING"],
+      "payload_schema": {"slot": "string (A|B|C)", "candidate_id": "string"},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "identity.keep",
+      "label": "保留样本(整体)",
+      "allowed_stages": ["IDENTITY_FITTING"],
+      "payload_schema": {"slot": "string (A|B|C)", "candidate_id": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "identity.borrow",
+      "label": "借用样本的局部特征",
+      "allowed_stages": ["IDENTITY_FITTING"],
+      "payload_schema": {"slot": "string (A|B|C)", "candidate_id": "string", "aspects": ["vocal_distance | texture | ..."]},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "identity.reject",
+      "label": "排除样本",
+      "allowed_stages": ["IDENTITY_FITTING"],
+      "payload_schema": {"slot": "string (A|B|C)", "reason": "string (optional)"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "identity.none",
+      "label": "都不对",
+      "allowed_stages": ["IDENTITY_FITTING"],
+      "payload_schema": {"reason": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "proposal.confirm",
+      "label": "确认创作提案",
+      "allowed_stages": ["PROPOSAL_REVIEW"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "proposal.edit",
+      "label": "修改提案某项",
+      "allowed_stages": ["PROPOSAL_REVIEW"],
+      "payload_schema": {"item": "string (e.g., 'theme' | 'lyrics.section.chorus')", "new_value": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "proposal.discuss",
+      "label": "讨论某项",
+      "allowed_stages": ["PROPOSAL_REVIEW"],
+      "payload_schema": {"item": "string", "user_question": "string"},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "variable.change",
+      "label": "修改变量",
+      "allowed_stages": ["VARIABLE_SETUP"],
+      "payload_schema": {
+        "name": "string (bpm | key | genre | vocal | instrument | space | duration | ...)",
+        "value": "string | number",
+        "experimental": "boolean (optional)"
+      },
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "variable.confirm",
+      "label": "确认变量",
+      "allowed_stages": ["VARIABLE_SETUP"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "variable.sample",
+      "label": "听某个变量的样本",
+      "allowed_stages": ["VARIABLE_SETUP"],
+      "payload_schema": {"name": "string", "candidate_value": "string"},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "generation.start",
+      "label": "开始生成",
+      "allowed_stages": ["VARIABLE_SETUP"],
+      "payload_schema": {},
+      "risk": "costly",
+      "mutates_state": true,
+      "consumes_generation_unit": true,
+      "confirmation_policy": "show_cost",
+      "cost_display": "将消耗 1 个生成单元"
+    },
+    {
+      "action_id": "clip.select",
+      "label": "选某个高光",
+      "allowed_stages": ["HIGHLIGHT_REVIEW"],
+      "payload_schema": {"candidate_id": "string", "slot": "string (A|B|C)"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "clip.feedback",
+      "label": "对高光反馈",
+      "allowed_stages": ["HIGHLIGHT_REVIEW"],
+      "payload_schema": {"candidate_id": "string", "dimension": "self | sound | fit", "rating": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "clip.none",
+      "label": "都不对(高光)",
+      "allowed_stages": ["HIGHLIGHT_REVIEW"],
+      "payload_schema": {"reason": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "review.approve",
+      "label": "确认作品",
+      "allowed_stages": ["FULL_REVIEW", "REVISION_GENERATING"],
+      "payload_schema": {},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "profile.archive",
+      "label": "归档个人风格档案",
+      "allowed_stages": ["CONFIRMED", "FULL_REVIEW"],
+      "payload_schema": {},
+      "risk": "high",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "review.rate",
+      "label": "评分",
+      "allowed_stages": ["HIGHLIGHT_REVIEW", "FULL_REVIEW"],
+      "payload_schema": {"dimension": "self | sound | fit", "score": "number (1-5)"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "revision.request",
+      "label": "申请修订",
+      "allowed_stages": ["FULL_REVIEW"],
+      "payload_schema": {"feedback": "string"},
+      "risk": "costly",
+      "mutates_state": true,
+      "consumes_generation_unit": true,
+      "confirmation_policy": "show_cost_and_explanation",
+      "cost_display": "将消耗 1 个生成单元,Matrix 不支持 partial regen,会整首重生成"
+    },
+    {
+      "action_id": "learning.propose",
+      "label": "提议学习项",
+      "allowed_stages": ["CONFIRMED"],
+      "payload_schema": {"trait": "object (IdentityTrait schema)"},
+      "risk": "normal",
+      "mutates_state": false,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "learning.confirm",
+      "label": "确认写入长期人格",
+      "allowed_stages": ["CONFIRMED"],
+      "payload_schema": {"trait_id": "string", "scope": "version | track | project | global"},
+      "risk": "persistent",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "show_impact_and_scope"
+    },
+    {
+      "action_id": "learning.reject",
+      "label": "拒绝学习项",
+      "allowed_stages": ["CONFIRMED"],
+      "payload_schema": {"trait_id": "string"},
+      "risk": "normal",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "none"
+    },
+    {
+      "action_id": "persona.delete",
+      "label": "永久删除人格特征",
+      "allowed_stages": ["*"],
+      "payload_schema": {"trait_id": "string"},
+      "risk": "destructive",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "typed_text_required",
+      "typed_text": "确认删除",
+      "consequence": "永久删除该 persona 特征"
+    },
+    {
+      "action_id": "persona.update_scope",
+      "label": "改人格作用域",
+      "allowed_stages": ["*"],
+      "payload_schema": {"trait_id": "string", "old_scope": "string", "new_scope": "string"},
+      "risk": "persistent",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "show_impact",
+      "consequence": "改 persona 作用域,影响未来创作引用"
+    },
+    {
+      "action_id": "track.delete",
+      "label": "永久删除作品版本",
+      "allowed_stages": ["CONFIRMED", "PROFILE_ARCHIVED"],
+      "payload_schema": {"track_version_id": "string"},
+      "risk": "destructive",
+      "mutates_state": true,
+      "consumes_generation_unit": false,
+      "confirmation_policy": "typed_text_required",
+      "typed_text": "确认删除",
+      "consequence": "永久删除该 track_version"
+    },
+    {
+      "action_id": "budget.override",
+      "label": "突破生成预算",
+      "allowed_stages": ["CANDIDATE_GENERATING", "REVISION_GENERATING"],
+      "payload_schema": {"reason": "string", "extra_units": "number"},
+      "risk": "costly",
+      "mutates_state": true,
+      "consumes_generation_unit": true,
+      "confirmation_policy": "show_cost",
+      "cost_display": "将允许超额生成"
+    }
+  ],
+  "risk_policies": {
+    "normal": {
+      "description": "直接执行",
+      "ui_behavior": "按钮响应即可"
+    },
+    "costly": {
+      "description": "消耗资源",
+      "ui_behavior": "确认卡片显示'将消耗 X 个生成单元',用户点确认才执行"
+    },
+    "persistent": {
+      "description": "改变长期状态",
+      "ui_behavior": "确认卡片显示影响范围,用户点确认才执行"
+    },
+    "destructive": {
+      "description": "永久不可逆",
+      "ui_behavior": "确认卡片显示具体影响 + 必须输入确认字样才能执行"
+    }
+  },
+  "two_stage_confirmation": {
+    "description": "高危动作(costly / persistent / destructive)的两阶段确认协议",
+    "protocol": [
+      "1. LLM 返回 ActionCandidate with confirmation_policy != 'none'",
+      "2. Stage Router 创建 PendingAction 记录(frozen payload + actor + session + revision + expires_at + status=pending)",
+      "3. Gateway 发确认卡,提供两个唯一 action: confirm.accept, confirm.cancel(不是 high-risk action 本身)",
+      "4. 用户点 confirm.accept → Orchestrator 验证 actor / session / revision / expiry → 执行 PendingAction 中被冻结的原动作",
+      "5. confirm.cancel 或 expire → PendingAction.status=cancelled | expired,原动作不执行"
+    ],
+    "anti_loop": "确认卡的 action 必须是 confirm.accept / confirm.cancel,而非高危 action 本身。否则无限循环。",
+    "schema": {
+      "pending_action": {
+        "pending_action_id": "pa_xxx",
+        "original_action_id": "string (e.g., revision.request)",
+        "frozen_payload": "object",
+        "actor_user_id": "u_xxx",
+        "creative_session_id": "cs_xxx",
+        "state_revision": 12,
+        "expires_at": "ISO-8601",
+        "status": "pending | confirmed | cancelled | expired | executed"
+      },
+      "confirm_accept_payload": {"pending_action_id": "pa_xxx"},
+      "confirm_cancel_payload": {"pending_action_id": "pa_xxx"}
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "case_id": "high_risk_confirmation_executes_once",
+  "description": "高危动作的两阶段确认:用户必须先点确认按钮,且确认按钮不能再次触发 require_confirmation",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p0_3", "high_risk", "two_stage_confirmation", "anti_loop"],
+  "purpose": "V2 评审 P0-3:二次确认协议不能无限循环",
+  "preconditions": {
+    "stage": "FULL_REVIEW",
+    "current_track_version_id": "track_v1",
+    "budget": {"limit": 4, "used": 2}
+  },
+  "input": {
+    "user_messages": [
+      "副歌改一下,加个 hook",
+      "确认"
+    ],
+    "user_actions": [
+      {"action_id": "revision.request", "payload": {"feedback": "副歌改 + 加 hook"}},
+      {"action_id": "confirm.accept", "payload": {"pending_action_id": "pa_xxx"}}
+    ]
+  },
+  "expected_flow": [
+    {
+      "step": 1,
+      "llm_returns": {
+        "envelope": {
+          "card_type": "audio_review",
+          "title": "确认修订?",
+          "blocks": [{"tag": "div", "text": {"tag": "plain_text", "content": "Matrix 不支持 partial regen,会整首重生成。消耗 1 个生成单元。剩余预算:3 / 4。"}}],
+          "actions": [
+            {"action_id": "confirm.accept", "label": "确认修订", "payload": {"pending_action_id": "pa_xxx"}},
+            {"action_id": "confirm.cancel", "label": "取消", "payload": {"pending_action_id": "pa_xxx"}}
+          ]
+        },
+        "state_mutation": null,
+        "tool_request": null,
+        "no_immediate_execution": true
+      },
+      "must_NOT_return": [
+        {"action_id": "revision.request", "label": "确认修订", "requires_confirmation": true},
+        "立即执行 revision.request"
+      ],
+      "reason": "确认卡的按钮必须是 confirm.accept,不是 revision.request。否则无限循环"
+    },
+    {
+      "step": 2,
+      "after_user_clicks_confirm_accept": {
+        "orchestrator_validates": [
+          "actor_user_id 匹配 current session",
+          "creative_session_id 匹配",
+          "state_revision 匹配(frozen payload)",
+          "expires_at 未过期"
+        ],
+        "executes": "frozen_payload(revision.request, feedback='副歌改 + 加 hook')",
+        "state_mutation_applied": {
+          "operations": [
+            {"op": "incr", "path": "/generation_budget/used", "value": 1}
+          ],
+          "expected_revision": "13 -> 14"
+        },
+        "tool_request_emitted": {
+          "type": "music.generate",
+          "idempotency_key": "cs_xxx:revision:13"
+        },
+        "pending_action_status": "executed"
+      }
+    },
+    {
+      "step": 3,
+      "after_user_clicks_confirm_cancel_or_expires": {
+        "pending_action_status": "cancelled | expired",
+        "原动作_not_executed": true,
+        "no_state_mutation": true
+      }
+    }
+  ],
+  "anti_loop_check": [
+    "确认卡的 action_id 不可能是 revision.request",
+    "Orchestrator 收到 confirm.accept 后,直接执行 frozen_payload,不再次问 '需要确认吗'",
+    "如果 confirm.accept 包含高危 action_id,系统拒绝"
+  ],
+  "high_risk_action_check": {
+    "high_risk_actions_tested": [
+      "session.reset_all",
+      "persona.delete",
+      "track.delete",
+      "persona.update_scope",
+      "learning.confirm(scope=global)",
+      "revision.request",
+      "generation.start",
+      "budget.override"
+    ],
+    "every_one_must_use_two_stage_protocol": true,
+    "every_one_must_NOT_appear_as_confirm_button": true
+  },
+  "must_not_happen": [
+    "高危 action 直接出现在确认卡的按钮列表",
+    "Orchestrator 再次返回 requires_confirmation=true",
+    "确认按钮点击后又触发同样的提示卡",
+    "frozen payload 在用户取消后被部分应用"
+  ]
+}

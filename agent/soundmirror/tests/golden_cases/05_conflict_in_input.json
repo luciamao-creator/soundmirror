@@ -1,0 +1,63 @@
+{
+  "case_id": "conflict_in_input",
+  "description": "用户输入相互冲突,Agent 必须指出冲突并请用户选择,不能静默处理",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["conflict_detection", "transparency", "user_choice"],
+  "input": {
+    "user_messages": [
+      "我想写一首快乐的歌",
+      "但是是关于妈妈去世的",
+      "节奏要快 120 BPM",
+      "但是整体要缓慢沉思"
+    ],
+    "user_actions": [
+      {"action_id": "archaeology.add", "payload": {"text": "快乐的歌"}},
+      {"action_id": "archaeology.add", "payload": {"text": "妈妈去世"}},
+      {"action_id": "variable.change", "payload": {"name": "bpm", "value": 120}},
+      {"action_id": "variable.change", "payload": {"name": "pace", "value": "slow_contemplative"}}
+    ]
+  },
+  "expected_flow": [
+    {
+      "step": 1,
+      "stage_after": "ARCHAEOLOGY",
+      "card_type": "summary",
+      "must_call_out_conflict": true,
+      "conflict_description": "用户说'快乐的歌'但主题是'妈妈去世',情绪表达方向冲突",
+      "must_offer_options": ["保留冲突(可能是回忆中的反差美学)", "取舍(选一个方向)", "重新描述"]
+    },
+    {
+      "step": 2,
+      "stage_after": "VARIABLE_SETUP",
+      "card_type": "variable",
+      "must_call_out_conflict": true,
+      "conflict_description": "BPM 120(快)和 pace=slow_contemplative(慢沉思)直接冲突",
+      "must_offer_options": ["BPM 80(慢沉思)", "BPM 120(快且反差)", "重新考虑"]
+    }
+  ],
+  "expected_decision_points": [
+    {
+      "decision_id": "emotional_arc_conflict",
+      "must_be_asked": true,
+      "must_offer_creative_resolution": "保留冲突可作为艺术选择"
+    },
+    {
+      "decision_id": "tempo_conflict",
+      "must_be_asked": true,
+      "must_not_silently_pick": true
+    }
+  ],
+  "must_not_happen": [
+    "silently pick one side and ignore the other",
+    "claim there is no conflict",
+    "change user input without asking",
+    "use hallucinated averages (e.g., BPM 100 as compromise)"
+  ],
+  "right_behaviors": [
+    "explicitly name the conflict in plain language",
+    "explain why the two inputs may not work together",
+    "offer 3+ resolution paths (keep conflict / pick one / reframe)",
+    "let user decide"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "description": "简单 happy-path:用户发 hi → 加 2 段考古素材 → 确认",
+  "user_id": "u_alice",
+  "chat_id": "oc_alice_001",
+  "steps": [
+    {"event_id": "j1_001", "user_text": "hi"},
+    {"event_id": "j1_002", "user_text": "我喜欢公路片,尤其是周游世界那种,一个人一辆老吉普"},
+    {"event_id": "j1_003", "user_text": "另外喜欢日剧里安静缓慢的节奏"},
+    {"event_id": "j1_004", "action_id": "archaeology.confirm"}
+  ]
+}

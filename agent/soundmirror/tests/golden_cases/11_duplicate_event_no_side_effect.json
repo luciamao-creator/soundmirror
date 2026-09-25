@@ -1,0 +1,71 @@
+{
+  "case_id": "duplicate_event_no_side_effect",
+  "description": "同一 event_id 重复到达不能产生副作用(预算、状态、人格都不变)",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "idempotency", "production_safety"],
+  "purpose": "V2 评审 P0-5:事件幂等,飞书 webhook 重发不应产生副作用",
+  "preconditions": {
+    "stage": "VARIABLE_SETUP",
+    "current_state_revision": 10,
+    "budget": {"limit": 4, "used": 2},
+    "persona_traits": []
+  },
+  "scenario": [
+    {
+      "step": "T1",
+      "event": {
+        "event_id": "evt_abc123",
+        "type": "im.message.receive_v1",
+        "content": {"text": "BPM 88"}
+      },
+      "user_action": {"action_id": "variable.change", "payload": {"name": "bpm", "value": 88}},
+      "expected_first_processing": {
+        "state_mutation_applied": true,
+        "revision_after": 11,
+        "budget_after": {"limit": 4, "used": 2}
+      }
+    },
+    {
+      "step": "T2",
+      "context": "飞书 webhook 因网络问题重发同一事件(同 event_id)",
+      "event": {
+        "event_id": "evt_abc123",
+        "type": "im.message.receive_v1",
+        "content": {"text": "BPM 88"}
+      },
+      "dedup_check": "event_id already processed",
+      "expected_response": {
+        "http_status": 200,
+        "body": {"code": 0, "msg": "ok (idempotent)"},
+        "state_mutation_NOT_applied": true,
+        "revision_unchanged": 11,
+        "budget_unchanged": {"limit": 4, "used": 2},
+        "persona_unchanged": []
+      }
+    },
+    {
+      "step": "T3",
+      "context": "第三次到达(依然同 event_id)",
+      "expected_same_as_T2": true
+    }
+  ],
+  "dedup_table": {
+    "key": "event_id",
+    "ttl_seconds": 86400,
+    "store": "SQLite table inbox (event_id PRIMARY KEY)"
+  },
+  "must_not_happen": [
+    "重复事件重复扣减 budget",
+    "重复事件重复生成音乐(消耗预算 × 2)",
+    "重复事件重复写入 persona",
+    "重复事件推动 stage 变化",
+    "返回 5xx(应该 200 + idempotent)"
+  ],
+  "right_behaviors": [
+    "Inbox 表用 event_id 做 PRIMARY KEY,upsert 失败就 skip",
+    "首次处理结果(包含 message_id 和 final state)存入 dedup 缓存",
+    "重复事件直接返回缓存结果,不再走业务逻辑"
+  ],
+  "related_to": "WEBHOOK_RETRY (飞书 5xx 会重发)"
+}

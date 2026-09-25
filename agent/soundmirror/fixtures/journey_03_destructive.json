@@ -1,0 +1,11 @@
+{
+  "description": "Destructive 动作 + 跨用户攻击测试",
+  "user_id": "u_carol",
+  "chat_id": "oc_carol_001",
+  "steps": [
+    {"event_id": "j3_001", "user_text": "hi"},
+    {"event_id": "j3_002", "user_text": "我想重新开始" },
+    {"event_id": "j3_003", "action_id": "session.reset_all"},
+    {"event_id": "j3_004", "action_id": "confirm.cancel"}
+  ]
+}

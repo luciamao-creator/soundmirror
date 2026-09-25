@@ -1,0 +1,60 @@
+{
+  "case_id": "happy_path_western_road",
+  "description": "用户描述一个西部公路风格的故事,Agent 走完所有 stage,生成完整作品并确认",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["happy_path", "english_chinese_mix", "road_folk"],
+  "input": {
+    "user_messages": [
+      "开始",
+      "我想写一首关于长途卡车司机在公路上的孤独和坚持的歌",
+      "女声,温暖的,带点沙哑",
+      "试试西部公路的感觉",
+      "不要电子乐器",
+      "确认提案",
+      "88 BPM",
+      "D minor",
+      "确认变量",
+      "选 A"
+    ],
+    "user_actions": [
+      {"action_id": "session.start", "payload": {}},
+      {"action_id": "archaeology.add", "payload": {"text": "西部公路 + 司机孤独 + 坚持"}},
+      {"action_id": "identity.keep", "payload": {"slot": "warm_female_vocal"}},
+      {"action_id": "identity.keep", "payload": {"slot": "road_folk"}},
+      {"action_id": "proposal.confirm", "payload": {}},
+      {"action_id": "variable.change", "payload": {"name": "bpm", "value": 88}},
+      {"action_id": "variable.change", "payload": {"name": "key", "value": "D_minor"}},
+      {"action_id": "variable.confirm", "payload": {}},
+      {"action_id": "clip.select", "payload": {"candidate_id": "candidate_A"}},
+      {"action_id": "review.approve", "payload": {}}
+    ]
+  },
+  "expected_flow": [
+    {"step": 1, "stage_after": "NEW", "card_type": "question", "must_contain": ["开始"]},
+    {"step": 2, "stage_after": "ARCHAEOLOGY", "card_type": "summary", "must_contain": ["西部公路", "司机", "孤独", "坚持"]},
+    {"step": 3, "stage_after": "IDENTITY_FITTING", "card_type": "sample", "count": 2, "must_contain_options": ["保留", "都不对", "跳过"]},
+    {"step": 4, "stage_after": "PROPOSAL_REVIEW", "card_type": "proposal", "must_contain_fields": ["theme", "narrative_view", "emotional_arc", "lyrics", "music"], "lyrics_soft_locked": true},
+    {"step": 5, "stage_after": "VARIABLE_SETUP", "card_type": "variable", "must_show_sources": ["user_confirmed", "agent_inferred", "system_default"]},
+    {"step": 6, "stage_after": "CANDIDATE_GENERATING", "card_type": "generation", "candidate_count": 2, "must_not_show": ["取消按钮", "百分比"]},
+    {"step": 7, "stage_after": "HIGHLIGHT_REVIEW", "card_type": "audio_review", "must_ask_three_dimensions": true, "highlights_not_fixed_30s": true},
+    {"step": 8, "stage_after": "FULL_REVEAL", "card_type": "audio_review", "no_new_generation": true, "must_show": ["完整歌", "歌词", "使用锚点", "变量"]},
+    {"step": 9, "stage_after": "FULL_REVIEW", "card_type": "audio_review"},
+    {"step": 10, "stage_after": "CONFIRMED", "card_type": "learning", "must_ask_scope": true, "must_not_auto_upgrade": true}
+  ],
+  "expected_final_state": {
+    "stage": "PROFILE_ARCHIVED",
+    "artifacts_created": 1,
+    "long_term_traits_added": null,
+    "budget_used": 2
+  },
+  "must_not_happen": [
+    "fake voice clone",
+    "claim BPM is strictly 88",
+    "auto-upgrade selection to long-term trait",
+    "skip archaeology stage without user input",
+    "use collapsible block (not supported in Feishu)",
+    "use checkbox block (not supported in Feishu)",
+    "produce lark-card-2.0 specific JSON in envelope"
+  ]
+}

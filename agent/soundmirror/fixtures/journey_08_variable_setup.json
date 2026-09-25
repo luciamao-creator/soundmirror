@@ -1,0 +1,16 @@
+{
+  "description": "VARIABLE_SETUP 阶段:用户改 BPM/Key/Genre/Instrument",
+  "user_id": "u_henry",
+  "chat_id": "oc_henry_001",
+  "steps": [
+    {"event_id": "j8_001", "user_text": "hi"},
+    {"event_id": "j8_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "VARIABLE_SETUP"}]
+    }},
+    {"event_id": "j8_003", "user_text": "BPM 88"},
+    {"event_id": "j8_004", "user_text": "降 B 大调"},
+    {"event_id": "j8_005", "user_text": "换成电子"},
+    {"event_id": "j8_006", "user_text": "加钢琴"}
+  ]
+}

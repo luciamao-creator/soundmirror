@@ -1,0 +1,14 @@
+{
+  "description": "高危动作两阶段确认:推 stage → 点 revision.request(走 Orchestrator 二次确认) → confirm.accept",
+  "user_id": "u_bob",
+  "chat_id": "oc_bob_001",
+  "steps": [
+    {"event_id": "j2_001", "user_text": "hi"},
+    {"event_id": "j2_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "FULL_REVIEW"}]
+    }},
+    {"event_id": "j2_003", "action_id": "revision.request", "action_payload": {"feedback": "副歌有点平,加个 hook"}},
+    {"event_id": "j2_004", "action_id": "confirm.accept"}
+  ]
+}

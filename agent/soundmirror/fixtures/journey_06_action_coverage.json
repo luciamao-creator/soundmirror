@@ -1,0 +1,17 @@
+{
+  "description": "不同 action_id 的覆盖测试 — 看 Orchestrator 是否正确路由",
+  "user_id": "u_frank",
+  "chat_id": "oc_frank_001",
+  "steps": [
+    {"event_id": "j6_001", "user_text": "hi"},
+
+    {"event_id": "j6_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "ARCHAEOLOGY"}]
+    }},
+    {"event_id": "j6_003", "action_id": "archaeology.add"},
+    {"event_id": "j6_004", "action_id": "session.pause"},
+    {"event_id": "j6_005", "action_id": "session.resume"},
+    {"event_id": "j6_006", "action_id": "summary.request"}
+  ]
+}

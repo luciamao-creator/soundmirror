@@ -1,0 +1,23 @@
+{
+  "description": "边界 case:空文本、超长文本、特殊字符、多行",
+  "user_id": "u_grace",
+  "chat_id": "oc_grace_001",
+  "steps": [
+    {"event_id": "j7_001", "user_text": "hi"},
+
+    {"event_id": "j7_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "ARCHAEOLOGY"}]
+    }},
+
+    {"event_id": "j7_003", "user_text": ""},
+
+    {"event_id": "j7_004", "user_text": "   "},
+
+    {"event_id": "j7_005", "user_text": "a"},
+
+    {"event_id": "j7_006", "user_text": "我刚刚在车里听到一首很老的歌,大概 90 年代初的那种合成器流行,旋律很慢,歌词讲的是深夜开车穿过空城的故事,让我想到小时候坐绿皮火车去外婆家的那个记忆,夜里车上的人都睡了,只有窗外的灯一盏一盏划过去,那是我第一次知道孤独这个词的味道"},
+
+    {"event_id": "j7_007", "user_text": "你好!@#$%^&*()_+-={}[]|:;<>?,./`~"}
+  ]
+}

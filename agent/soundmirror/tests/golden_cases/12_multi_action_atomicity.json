@@ -1,0 +1,83 @@
+{
+  "case_id": "multi_action_atomicity",
+  "description": "用户一句话含多个动作,Interpreter 返回 ActionPlan,Orchestrator 做 stage / 依赖 / 原子性校验,用户一次确认",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p1_4", "action_plan", "atomicity"],
+  "purpose": "V2 评审 P1-4:多动作用 ActionPlan,Orchestrator 校验,用户一次确认",
+  "preconditions": {
+    "stage": "IDENTITY_FITTING",
+    "current_state_revision": 7,
+    "ledger": {
+      "identity_anchors": [],
+      "music_spec": {"lyrics": {"sections": []}}
+    }
+  },
+  "input": {
+    "user_messages": ["B 不错,但歌词第 3 句改一下"]
+  },
+  "expected_interpreter_output": {
+    "plan": {
+      "id": "plan_xxx",
+      "actions": [
+        {
+          "action_id": "identity.keep",
+          "payload": {"slot": "B"},
+          "stage_at_submission": "IDENTITY_FITTING",
+          "expected_state_revision": 7
+        },
+        {
+          "action_id": "proposal.edit",
+          "payload": {"item": "lyrics.section.chorus.line_3"},
+          "stage_at_submission": "IDENTITY_FITTING",
+          "expected_state_revision": 7
+        }
+      ],
+      "atomicity": "partial",
+      "depends_on": [],
+      "side_effects": ["stage_may_advance"],
+      "requires_user_summary": true,
+      "summary_text": "保留 B(身份),改歌词第 3 句(提案)"
+    }
+  },
+  "expected_orchestrator_behavior": [
+    "校验 action_id 在 catalog",
+    "校验 stage_at_submission 是 IDENTITY_FITTING(当前 stage)",
+    "校验 expected_state_revision 匹配",
+    "检测: identity.keep 完成可能推到 PROPOSAL_REVIEW",
+    "检测: proposal.edit 在 PROPOSAL_REVIEW 才有效",
+    "结论: 两个 action 不能原子提交(跨 stage)",
+    "向用户展示: '1. 保留 B 2. 改歌词第 3 句 → 这会推到下个阶段,无法回退。是否继续?'",
+    "用户确认 → 按顺序提交(先 identity.keep,推进 stage,再 proposal.edit)",
+    "如果中间失败 → 回滚 identity.keep,告诉用户"
+  ],
+  "atomicity_modes": {
+    "atomic": "所有 action 能在同一 stage 内一次性提交",
+    "partial": "action 之间跨 stage,按顺序提交,允许部分失败",
+    "blocked": "action 之间冲突,不能提交"
+  },
+  "conflict_detection_examples": [
+    {
+      "conflict": "identity.keep + variable.change",
+      "detected": true,
+      "reason": "前者可能推到 PROPOSAL_REVIEW,后者在 VARIABLE_SETUP 才有意义"
+    },
+    {
+      "conflict": "session.reset_all + identity.keep",
+      "detected": true,
+      "reason": "destructive action 不能与其他 action 同批"
+    }
+  ],
+  "must_not_happen": [
+    "Gateway 分别确认两个 action(用户会以为两个独立操作)",
+    "Orchestrator 推进 identity.keep 后自动跑 proposal.edit(用户没明确)",
+    "任意 action 失败时不回滚已提交的",
+    "Orchestrator 静默跳过冲突检查"
+  ],
+  "right_behaviors": [
+    "展示 ActionPlan 摘要 + 顺序 + 风险",
+    "用户一次确认所有非阻塞 action",
+    "按顺序执行,失败明确告警",
+    "可原子提交的事原子提交"
+  ]
+}

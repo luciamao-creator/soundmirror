@@ -1,0 +1,74 @@
+{
+  "case_id": "generation_schema_retry_does_not_regenerate",
+  "description": "LLM 输出 envelope 不符合 schema 时,Orchestrator 重试 LLM,但绝不能重新调用音乐生成(避免预算浪费)",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p0_6", "schema_retry", "cost_safety"],
+  "purpose": "V2 评审 P0-6:LLM 不应自己重试,且 schema 重试不能引发音乐重生成",
+  "preconditions": {
+    "stage": "CANDIDATE_GENERATING",
+    "llm_first_attempt_status": "envelope_failed_validation",
+    "budget": {"limit": 4, "used": 2, "history": ["v1 from candidates A+B"]}
+  },
+  "scenario": [
+    {
+      "step": "T1",
+      "llm_outputs_invalid_envelope": {
+        "reason": "schema validation failed",
+        "specific_error": "card_type 必须是 enum 之一",
+        "tool_request_already_emitted": true,
+        "music_already_called": true
+      },
+      "current_budget_state": {"used": 3, "history": ["v1", "current_tool_request"]}
+    },
+    {
+      "step": "T2",
+      "orchestrator_should": [
+        "重试 LLM(传回错误信息 + 上次完整 AgentResult)",
+        "不要重新调用 MusicAdapter",
+        "不要把这次工具调用结果当作 new generation"
+      ],
+      "music_retry_allowed": false,
+      "budget_NOT_incremented_again": true
+    },
+    {
+      "step": "T3",
+      "llm_outputs_valid_envelope",
+      "orchestrator_should": [
+        "应用 envelope 但不再次调用 MusicAdapter",
+        "本次 envelope 仅修正卡片显示,音频已经生成",
+        "Generation Card 应显示实际状态(已生成中 / 失败 / 完成)"
+      ]
+    },
+    {
+      "step": "T4",
+      "if_llm_fails_after_3_retries": {
+        "fallback": "返回 error envelope 给用户,说明 '卡片生成失败但音乐已生成,请稍后重试查看结果'",
+        "music_still_completes": true
+      }
+    }
+  ],
+  "anti_double_charge": {
+    "music_adapter_must_have_idempotency_key": true,
+    "orchestrator_must_track_tool_request_id": true,
+    "if_same_tool_request_id_arrives_again": "skip (no new generation)",
+    "if_LLM_retries_after_tool_request": "must_NOT_re-call_MusicAdapter"
+  },
+  "state_must_track": {
+    "tool_request_id": "tool_xxx",
+    "tool_status": "pending | succeeded | failed",
+    "last_envelope_attempt_id": "env_xxx"
+  },
+  "must_not_happen": [
+    "schema retry 触发 music 重生成(budget 扣 2 次)",
+    "Orchestrator 在 LLM 重试时重新构造 envelope 给用户",
+    "MusicAdapter 在没有 idempotency_key 时被重复调用",
+    "用户因为 LLM 输出错误而被重复扣 budget"
+  ],
+  "right_behaviors": [
+    "LLM 重试只修正 envelope 内容(卡片显示文本)",
+    "MusicAdapter 调用一旦发出,即使 LLM 输出错也不重发",
+    "如果 LLM 重试 3 次都失败,error envelope 但音频照样生成",
+    "audit log 记录 'schema_retry_attempt: N, music_reused: true'"
+  ]
+}

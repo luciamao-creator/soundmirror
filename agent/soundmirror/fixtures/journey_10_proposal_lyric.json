@@ -1,0 +1,18 @@
+{
+  "description": "PROPOSAL_REVIEW 阶段:用户改歌词",
+  "user_id": "u_jane",
+  "chat_id": "oc_jane_001",
+  "steps": [
+    {"event_id": "j10_001", "user_text": "hi"},
+    {"event_id": "j10_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [
+        {"op": "set", "path": "/current_stage", "value": "PROPOSAL_REVIEW"},
+        {"op": "set", "path": "/current_proposal", "value": {"genre": "民谣", "bpm": 88, "key": "C"}}
+      ]
+    }},
+    {"event_id": "j10_003", "user_text": "副歌改"},
+    {"event_id": "j10_004", "user_text": "第 3 句改一下"},
+    {"event_id": "j10_005", "user_text": "bridge 改"}
+  ]
+}

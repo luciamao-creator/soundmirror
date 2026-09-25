@@ -1,0 +1,38 @@
+{
+  "description": "完整 stage 生命周期 (用 lowercase 保留 b 触发,验证 revision 递增 + identity 阶段)",
+  "user_id": "u_eve",
+  "chat_id": "oc_eve_001",
+  "steps": [
+    {"event_id": "j5_001", "user_text": "hi"},
+
+    {"event_id": "j5_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "ARCHAEOLOGY"}]
+    }},
+    {"event_id": "j5_003", "user_text": "我喜欢公路片那种孤独"},
+    {"event_id": "j5_004", "user_text": "另外喜欢日本慢电影"},
+    {"event_id": "j5_005", "action_id": "archaeology.confirm"},
+
+    {"event_id": "j5_006", "admin_state_mutation": {
+      "expected_revision": 4,
+      "operations": [
+        {"op": "set", "path": "/current_stage", "value": "IDENTITY_FITTING"},
+        {"op": "set", "path": "/identity_candidates", "value": [
+          {"slot": "A", "label": "贴耳"},
+          {"slot": "B", "label": "自然"},
+          {"slot": "C", "label": "辽阔"}
+        ]}
+      ]
+    }},
+    {"event_id": "j5_007", "user_text": "保留 b"},
+
+    {"event_id": "j5_008", "admin_state_mutation": {
+      "expected_revision": 6,
+      "operations": [
+        {"op": "set", "path": "/current_stage", "value": "CONFIRMED"},
+        {"op": "set", "path": "/persona_selections", "value": [{"slot": "B"}]}
+      ]
+    }},
+    {"event_id": "j5_009", "user_text": "我想再写一首"}
+  ]
+}

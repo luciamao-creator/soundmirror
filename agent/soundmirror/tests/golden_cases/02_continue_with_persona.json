@@ -1,0 +1,60 @@
+{
+  "case_id": "continue_with_persona",
+  "description": "用户已有长期人格(暖女声、88 BPM、D minor、西部公路),开新歌时继承",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["persona_inheritance", "re_use", "global_traits"],
+  "preconditions": {
+    "user_global_traits": [
+      {"dimension": "vocal_style", "value": "温暖带沙哑的女声", "status": "confirmed", "scope": "global"},
+      {"dimension": "rhythm", "value": "88 BPM 步行感", "status": "confirmed", "scope": "global"},
+      {"dimension": "harmony", "value": "D minor 公路调", "status": "confirmed", "scope": "global"},
+      {"dimension": "narrative", "value": "西部公路 + 孤独意象", "status": "confirmed", "scope": "global"}
+    ],
+    "user_prohibitions": []
+  },
+  "input": {
+    "user_messages": [
+      "开新歌",
+      "这次想写一首关于摩托车手在山路的歌,同样孤独但更快",
+      "继承之前的风格",
+      "确认提案",
+      "BPM 用 108(对比之前的 88)",
+      "确认变量"
+    ],
+    "user_actions": [
+      {"action_id": "session.start", "payload": {"mode": "continue"}},
+      {"action_id": "archaeology.add", "payload": {"text": "山路 + 摩托车 + 更快 + 孤独"}},
+      {"action_id": "identity.borrow", "payload": {"from_slot": "warm_female_vocal", "scope": "global"}},
+      {"action_id": "proposal.confirm", "payload": {}},
+      {"action_id": "variable.change", "payload": {"name": "bpm", "value": 108, "experimental": true}},
+      {"action_id": "variable.confirm", "payload": {}}
+    ]
+  },
+  "expected_flow": [
+    {"step": 1, "stage_after": "NEW", "card_type": "question", "must_offer_options": ["开新歌", "续创作", "看历史"]},
+    {"step": 2, "stage_after": "ARCHAEOLOGY", "card_type": "summary", "must_recognize_intent": "用户要新歌但延续风格"},
+    {"step": 3, "stage_after": "IDENTITY_FITTING", "card_type": "sample", "must_show_inherited_traits": ["vocal_style", "rhythm_baseline"], "experimental_dimension_flagged": "rhythm"},
+    {"step": 4, "stage_after": "PROPOSAL_REVIEW", "card_type": "proposal", "must_call_out_experimental_dimension": "BPM 108 vs 继承的 88"},
+    {"step": 5, "stage_after": "VARIABLE_SETUP", "card_type": "variable", "bpm_field_shows_source": "user_confirmed", "warning_must_be_shown": "experimental vs 88 baseline"}
+  ],
+  "expected_decision_points": [
+    {
+      "step": 3,
+      "must_ask": "这次哪些继承,哪些突破?",
+      "default_behavior": "列继承清单,问要不要突破其中一个",
+      "wrong_behavior": "直接全部继承 + 不问"
+    },
+    {
+      "step": 4,
+      "must_call_out": "108 BPM 是实验维度,可能和继承的 88 风格冲突",
+      "wrong_behavior": "悄悄改 BPM,不让用户知道这是实验"
+    }
+  ],
+  "must_not_happen": [
+    "automatically inherit all traits without asking",
+    "silently change inherited BPM without warning",
+    "delete any global traits without explicit confirmation",
+    "assume user wants to repeat last song exactly"
+  ]
+}

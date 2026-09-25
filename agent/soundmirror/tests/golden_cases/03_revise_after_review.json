@@ -1,0 +1,48 @@
+{
+  "case_id": "revise_after_review",
+  "description": "用户对完整作品要求修订,Agent 必须消耗 1 个生成单元 + 解释不会局部重生成",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["revision", "high_risk_action", "budget_consumption"],
+  "preconditions": {
+    "stage": "FULL_REVIEW",
+    "current_track_version_id": "track_v1",
+    "budget": {"limit": 4, "used": 2, "history": ["v1 from candidates A+B"]}
+  },
+  "input": {
+    "user_messages": [
+      "副歌部分能不能更短一些?现在太啰嗦",
+      "另外鼓组想再强一点",
+      "确认修订"
+    ],
+    "user_actions": [
+      {"action_id": "revision.request", "payload": {"feedback": "副歌缩短 + 鼓组加强"}},
+      {"action_id": "revision.request", "payload": {"confirm": true}}
+    ]
+  },
+  "expected_flow": [
+    {"step": 1, "stage_after": "FULL_REVIEW", "card_type": "audio_review", "must_show": "用户在听完整歌,想改"},
+    {"step": 2, "stage_after": "FULL_REVIEW", "card_type": "audio_review", "must_explain": "matrix 不支持 partial regen,修订 = 整首重生成", "must_explain_consumes": "1 个生成单元"},
+    {"step": 3, "stage_after": "REVISION_GENERATING", "card_type": "generation", "candidate_count": 2, "must_preserve_old": "track_v1 不删除"},
+    {"step": 4, "stage_after": "HIGHLIGHT_REVIEW", "card_type": "audio_review", "version_label": "v2"},
+    {"step": 5, "stage_after": "FULL_REVEAL", "card_type": "audio_review", "version_label": "v2", "must_list_versions": ["v1", "v2"]}
+  ],
+  "expected_outcomes": {
+    "new_track_version_id": "track_v2",
+    "old_track_version_id": "track_v1 (preserved)",
+    "budget_after": {"limit": 4, "used": 3, "history": ["v1 from candidates A+B", "v2 from revision"]},
+    "must_show_version_index": true
+  },
+  "must_not_happen": [
+    "delete track_v1 (must preserve)",
+    "claim partial regen of chorus only",
+    "skip the explanation of why full re-gen is needed",
+    "forget to update version index",
+    "let user assume they kept the same song"
+  ],
+  "high_risk_action_check": {
+    "action_id": "revision.request",
+    "must_require_confirmation": true,
+    "must_show": "将消耗 1 个生成单元"
+  }
+}

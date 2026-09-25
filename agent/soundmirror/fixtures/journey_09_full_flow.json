@@ -1,0 +1,23 @@
+{
+  "description": "完整 happy path + revision request + approve",
+  "user_id": "u_ivy",
+  "chat_id": "oc_ivy_001",
+  "steps": [
+    {"event_id": "j9_001", "user_text": "hi"},
+    {"event_id": "j9_002", "admin_state_mutation": {
+      "expected_revision": 1,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "FULL_REVIEW"}]
+    }},
+    {"event_id": "j9_003", "user_text": "整体满意"},
+    {"event_id": "j9_004", "admin_state_mutation": {
+      "expected_revision": 2,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "FULL_REVEAL"}]
+    }},
+    {"event_id": "j9_005", "user_text": "提议学习"},
+    {"event_id": "j9_006", "admin_state_mutation": {
+      "expected_revision": 4,
+      "operations": [{"op": "set", "path": "/current_stage", "value": "CONFIRMED"}]
+    }},
+    {"event_id": "j9_007", "user_text": "写新歌"}
+  ]
+}

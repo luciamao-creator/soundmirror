@@ -1,0 +1,94 @@
+{
+  "case_id": "cross_session_isolation",
+  "description": "不同用户的会话完全隔离,User A 不能读 User B 的 ledger,也不能影响 User B 的状态",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p1_6", "isolation", "multi_tenant"],
+  "purpose": "V2 评审 P1-6:跨用户数据隔离,actor_user_id 必须从可信映射取,按钮 payload 不能信任",
+  "test_users": [
+    {"user_id": "u_alice", "chat_id": "oc_alice_chat", "session_id": "cs_alice"},
+    {"user_id": "u_bob", "chat_id": "oc_bob_chat", "session_id": "cs_bob"}
+  ],
+  "scenarios": [
+    {
+      "id": "isolation_1_ledger_read",
+      "description": "User A 请求读 User B 的 ledger",
+      "input": {
+        "actor_user_id": "u_alice",
+        "request": "查看 cs_bob 的状态",
+        "attack_vector": "按钮 payload 中伪造 session_id"
+      },
+      "expected_behavior": {
+        "gateway_must_resolve_session_id_from_server_side_mapping": true,
+        "must_NOT_trust_button_payload_session_id": true,
+        "must_reject_cross_user_read": true,
+        "response": "无权限"
+      }
+    },
+    {
+      "id": "isolation_2_state_write",
+      "description": "User A 尝试写 User B 的 ledger",
+      "input": {
+        "actor_user_id": "u_alice",
+        "request": "修改 cs_bob 的 stage",
+        "attack_vector": "按钮 payload 中包含对方 session_id"
+      },
+      "expected_behavior": {
+        "state_mutation_must_check_actor_user_id": true,
+        "must_reject_cross_user_write": true,
+        "no_state_changed_in_cs_bob": true,
+        "audit_log": "cross_session_attempt: actor=u_alice target=cs_bob denied"
+      }
+    },
+    {
+      "id": "isolation_3_concurrent",
+      "description": "User A 和 User B 同时推进各自的会话,互不影响",
+      "input": {
+        "user_a_action": {"session": "cs_alice", "action": "variable.change", "bpm": 88},
+        "user_b_action": {"session": "cs_bob", "action": "variable.change", "bpm": 108},
+        "happens": "并发"
+      },
+      "expected_behavior": {
+        "user_a_ledger_after": {"bpm": 88, "revision": 13},
+        "user_b_ledger_after": {"bpm": 108, "revision": 13},
+        "no_cross_contamination": true
+      }
+    },
+    {
+      "id": "isolation_4_personal_data_disclosure",
+      "description": "User A 询问 User B 的作品",
+      "input": {
+        "actor_user_id": "u_alice",
+        "request": "播放 Bob 的歌",
+        "fallback": "如果 User B 没有公开分享,不能访问"
+      },
+      "expected_behavior": {
+        "must_check_share_permission": true,
+        "default_deny": true,
+        "no_track_list_disclosure": true
+      }
+    }
+  ],
+  "gateway_contract": {
+    "actor_user_id": "来自服务端 identity_map(lark_open_id → product_user_id),不来自按钮 payload",
+    "creative_session_id": "来自 conversation_active_session 表,不来自按钮 payload",
+    "button_payload": "只包含业务 ID(如 candidate_id / slot / scope),不包含 user_id / session_id / chat_id"
+  },
+  "state_store_contract": {
+    "every_write_must_check_actor_user_id_matches_session_owner": true,
+    "every_read_must_check_actor_user_id_matches_session_owner": true,
+    "audit_log_for_every_cross_session_attempt": true
+  },
+  "must_not_happen": [
+    "User A 读到 User B 的 ledger",
+    "User A 写入 User B 的 ledger",
+    "按钮 payload 中出现 user_id / session_id / chat_id",
+    "Gateway 直接信任 payload 中的身份字段"
+  ],
+  "right_behaviors": [
+    "Gateway 服务端映射表是身份唯一来源",
+    "按钮 payload 只含业务 ID",
+    "所有跨用户访问尝试记录 audit log",
+    "默认拒绝,显式授权才允许"
+  ]
+}

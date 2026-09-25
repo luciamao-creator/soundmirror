@@ -1,0 +1,38 @@
+{
+  "case_id": "action_catalog_consistency",
+  "description": "所有 prompt 文件的 Action 必须从 action_catalog.json 引用,不允许出现 catalog 外的 action_id",
+  "version": "1.0.0",
+  "created_at": "2026-09-17",
+  "tags": ["v2_review", "p0_1", "consistency"],
+  "purpose": "V2 评审 P0-1:Action 白名单与示例直接冲突的回归测试",
+  "input": {
+    "scenario": "static_check",
+    "files_to_inspect": [
+      "agent/soundmirror/SKILL.md",
+      "agent/soundmirror/prompts/director.md",
+      "agent/soundmirror/prompts/interpreter.md",
+      "agent/soundmirror/prompts/proposal.md"
+    ],
+    "reference_catalog": "agent/soundmirror/action_catalog.json"
+  },
+  "expected_check": {
+    "all_action_ids_must_exist_in_catalog": true,
+    "no_legacy_action_ids_allowed": ["sample.play", "sample.keep", "sample.none", "session.resume_with_high_risk", "*", "*.skip", "*.confirm"],
+    "no_prompt_defines_own_action_whitelist": true,
+    "every_prompt_references_catalog_by_path": true
+  },
+  "validation_steps": [
+    "1. 加载 action_catalog.json,提取所有 action_id",
+    "2. 扫描所有 prompt 文件,提取 'action_id:' 后面的字符串 / action.* 用法",
+    "3. 比对:每个 prompt 中的 action_id 必须 ∈ catalog",
+    "4. 扫描是否有 'stage.skip / back / summary / generate' 这种未在 catalog 的写法",
+    "5. 检查每个 prompt 头部是否有 catalog 路径引用"
+  ],
+  "must_not_happen": [
+    "SKILL.md 写 sample.play / sample.keep / sample.none",
+    "interpreter.md 写 *.skip / *.confirm 通配",
+    "任何 prompt 自己维护 Action 白名单表格",
+    "出现既不在 catalog 也不在 README 的 action_id"
+  ],
+  "regression": "V1.0 版本的 SKILL.md 写 'identity.keep / identity.borrow',interpreter.md 写 'sample.play / sample.keep',直接打架"
+}

@@ -1,0 +1,11 @@
+{
+  "description": "澄清路径:用户说'好'不是确认,Agent 主动引导",
+  "user_id": "u_dave",
+  "chat_id": "oc_dave_001",
+  "steps": [
+    {"event_id": "j4_001", "user_text": "好"},
+    {"event_id": "j4_002", "user_text": "嗯,可以"},
+    {"event_id": "j4_003", "user_text": "OK"},
+    {"event_id": "j4_004", "action_id": "archaeology.confirm"}
+  ]
+}
