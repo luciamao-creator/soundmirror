@@ -1,0 +1,3277 @@
+{
+  "E1_full_flow": {
+    "db": "/run/csi/mount-root/nas/eab0d61a99b6696edb3d2aff87b585e8/voice-persona-assessment/agent/soundmirror/evidence/artifacts/db_e1_flow.sqlite",
+    "trace_db": "/run/csi/mount-root/nas/eab0d61a99b6696edb3d2aff87b585e8/voice-persona-assessment/agent/soundmirror/evidence/artifacts/db_e1_trace.sqlite",
+    "timeline": [
+      {
+        "step": "S1",
+        "intent": "user 提供声音素材 #1",
+        "kind": "text",
+        "decision": "continue",
+        "reasoning": "added fact (now 1 facts)",
+        "stage": "ARCHAEOLOGY",
+        "next_stage": null,
+        "rev_before": 1,
+        "rev_after": 1,
+        "tool_calls": [],
+        "latency_ms": 167.4,
+        "trace_id": "tr_f7161e3b3ed7"
+      },
+      {
+        "step": "S2",
+        "intent": "user 提供声音素材 #2",
+        "kind": "text",
+        "decision": "continue",
+        "reasoning": "added fact (now 2 facts)",
+        "stage": "ARCHAEOLOGY",
+        "next_stage": null,
+        "rev_before": 2,
+        "rev_after": 2,
+        "tool_calls": [],
+        "latency_ms": 107.2,
+        "trace_id": "tr_ec6b81fdb9d9"
+      },
+      {
+        "step": "S3",
+        "intent": "素材够,进身份试衣间",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "action archaeology.confirm executed",
+        "stage": "IDENTITY_FITTING",
+        "next_stage": null,
+        "rev_before": 3,
+        "rev_after": 3,
+        "tool_calls": [],
+        "latency_ms": 141.3,
+        "trace_id": "tr_9c494b96521c"
+      },
+      {
+        "step": "S4",
+        "intent": "选身份 A",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "action identity.keep executed",
+        "stage": "VARIABLE_SETUP",
+        "next_stage": null,
+        "rev_before": 5,
+        "rev_after": 5,
+        "tool_calls": [],
+        "latency_ms": 189.3,
+        "trace_id": "tr_1787b4822877"
+      },
+      {
+        "step": "S5",
+        "intent": "确认音乐变量",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "action variable.confirm executed",
+        "stage": "PROPOSAL_REVIEW",
+        "next_stage": null,
+        "rev_before": 6,
+        "rev_after": 6,
+        "tool_calls": [],
+        "latency_ms": 189.7,
+        "trace_id": "tr_c2535052bf72"
+      },
+      {
+        "step": "S6",
+        "intent": "确认提案 → 触发 3 路生成",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "generated READY clips",
+        "stage": "HIGHLIGHT_REVIEW",
+        "next_stage": null,
+        "rev_before": 8,
+        "rev_after": 8,
+        "tool_calls": [
+          {
+            "tool_id": "music.generate_candidates",
+            "duration_ms": 2029.3,
+            "error": null,
+            "result": {
+              "status": "READY",
+              "slots": [
+                {
+                  "slot": "A",
+                  "status": "READY",
+                  "node_id": "mock_node_7aa8ca98ff92"
+                },
+                {
+                  "slot": "B",
+                  "status": "READY",
+                  "node_id": "mock_node_d6d02c0fd11f"
+                },
+                {
+                  "slot": "C",
+                  "status": "READY",
+                  "node_id": "mock_node_d1b77172fba4"
+                }
+              ]
+            }
+          }
+        ],
+        "latency_ms": 2237.9,
+        "trace_id": "tr_c9cf3c7f3634"
+      },
+      {
+        "step": "S7",
+        "intent": "选高亮 A → 生成完整歌曲",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "selected slot A, full song generated",
+        "stage": "FULL_REVIEW",
+        "next_stage": null,
+        "rev_before": 10,
+        "rev_after": 10,
+        "tool_calls": [
+          {
+            "tool_id": "music.generate_full",
+            "duration_ms": 1228.6,
+            "error": null,
+            "result": {
+              "ok": true,
+              "full_song_node_id": "mock_full_d1b4745d9131",
+              "duration_ms": 90000
+            }
+          }
+        ],
+        "latency_ms": 1384.5,
+        "trace_id": "tr_f0396ceeae54"
+      },
+      {
+        "step": "S8",
+        "intent": "确认作品",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "action review.approve executed",
+        "stage": "CONFIRMED",
+        "next_stage": null,
+        "rev_before": 11,
+        "rev_after": 11,
+        "tool_calls": [],
+        "latency_ms": 119.0,
+        "trace_id": "tr_5b704ca30b2d"
+      },
+      {
+        "step": "S9",
+        "intent": "确认归档(带风险确认)",
+        "kind": "action",
+        "decision": "continue",
+        "reasoning": "profile archived",
+        "stage": "ARCHIVE",
+        "next_stage": null,
+        "rev_before": 12,
+        "rev_after": 12,
+        "tool_calls": [],
+        "latency_ms": 103.1,
+        "trace_id": "tr_2c08617e47e0"
+      }
+    ],
+    "final_ledger": {
+      "current_stage": "ARCHIVE",
+      "chat_id": "c_e1",
+      "archaeology_facts": [
+        {
+          "text": "海边六点的柴油味",
+          "ts": 1791204902.651754
+        },
+        {
+          "text": "妈妈电话里的咳嗽",
+          "ts": 1791204902.7725532
+        }
+      ],
+      "identity_candidates": [
+        {
+          "slot": "A",
+          "label": "贴耳 · 海边六点的柴油味"
+        },
+        {
+          "slot": "B",
+          "label": "自然 · 海边六点的柴油味"
+        },
+        {
+          "slot": "C",
+          "label": "辽阔 · 海边六点的柴油味"
+        }
+      ],
+      "persona_selections": [
+        {
+          "action": "keep",
+          "slot": "A"
+        }
+      ],
+      "music_spec": {
+        "bpm": 88,
+        "key": "C",
+        "genre": "indie",
+        "instruments": [
+          "piano",
+          "ambient pad"
+        ]
+      },
+      "current_proposal": {
+        "title": "未命名",
+        "lyrics": "[verse]\n海边六点的柴油味\n妈妈电话里的咳嗽\n\n[chorus]\n你不在 但影子还在\n",
+        "music_spec_snapshot": {
+          "bpm": 88,
+          "key": "C",
+          "genre": "indie",
+          "instruments": [
+            "piano",
+            "ambient pad"
+          ]
+        },
+        "persona_selections": [
+          {
+            "action": "keep",
+            "slot": "A"
+          }
+        ],
+        "source_facts_count": 2
+      },
+      "highlight_clips": [
+        {
+          "slot": "A",
+          "status": "READY",
+          "node_id": "mock_node_7aa8ca98ff92",
+          "preview_path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3",
+          "url": "mock://mock_node_7aa8ca98ff92_preview.mp3",
+          "duration_ms": 30000,
+          "is_mock": true,
+          "adapter": "MockMusicAdapter",
+          "checksum_sha256": "c7b7a31f226baa996d3b4d2f917421425a100440bd79205bbd2d1eb36ef8cfb4",
+          "signed_url_expires_at": "",
+          "error": null
+        },
+        {
+          "slot": "B",
+          "status": "READY",
+          "node_id": "mock_node_d6d02c0fd11f",
+          "preview_path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_d6d02c0fd11f_preview.mp3",
+          "url": "mock://mock_node_d6d02c0fd11f_preview.mp3",
+          "duration_ms": 30000,
+          "is_mock": true,
+          "adapter": "MockMusicAdapter",
+          "checksum_sha256": "6ce0959f446f20f0d7c3780326b68e020c7961663376c96c8b2dc7ea27ea8d7e",
+          "signed_url_expires_at": "",
+          "error": null
+        },
+        {
+          "slot": "C",
+          "status": "READY",
+          "node_id": "mock_node_d1b77172fba4",
+          "preview_path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_d1b77172fba4_preview.mp3",
+          "url": "mock://mock_node_d1b77172fba4_preview.mp3",
+          "duration_ms": 30000,
+          "is_mock": true,
+          "adapter": "MockMusicAdapter",
+          "checksum_sha256": "588aa20835fc5a23e184cddb7596d13ea66640505a5abd8e4b9042fad3ddfba7",
+          "signed_url_expires_at": "",
+          "error": null
+        }
+      ],
+      "generation_status": "READY",
+      "selected_highlight": {
+        "slot": "A",
+        "node_id": "mock_node_7aa8ca98ff92",
+        "preview_path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3",
+        "url": "mock://mock_node_7aa8ca98ff92_preview.mp3",
+        "duration_ms": 30000,
+        "is_mock": true,
+        "selected_at": 1791204905.6370542,
+        "full_song_path": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+        "full_song_url": "mock://mock_full_d1b4745d9131.mp3",
+        "full_song_node_id": "mock_full_d1b4745d9131",
+        "full_song_duration_ms": 90000,
+        "full_song_sha256": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c"
+      },
+      "personal_style_profile": {
+        "archaeology_facts": [
+          {
+            "text": "海边六点的柴油味",
+            "ts": 1791204902.651754
+          },
+          {
+            "text": "妈妈电话里的咳嗽",
+            "ts": 1791204902.7725532
+          }
+        ],
+        "persona_selections": [
+          {
+            "action": "keep",
+            "slot": "A"
+          }
+        ],
+        "music_spec": {
+          "bpm": 88,
+          "key": "C",
+          "genre": "indie",
+          "instruments": [
+            "piano",
+            "ambient pad"
+          ]
+        },
+        "selected_highlight": {
+          "slot": "A",
+          "node_id": "mock_node_7aa8ca98ff92",
+          "preview_path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3",
+          "url": "mock://mock_node_7aa8ca98ff92_preview.mp3",
+          "duration_ms": 30000,
+          "is_mock": true,
+          "selected_at": 1791204905.6370542,
+          "full_song_path": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+          "full_song_url": "mock://mock_full_d1b4745d9131.mp3",
+          "full_song_node_id": "mock_full_d1b4745d9131",
+          "full_song_duration_ms": 90000,
+          "full_song_sha256": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c"
+        },
+        "full_song": {
+          "slot": "A",
+          "node_id": "mock_node_7aa8ca98ff92",
+          "preview_path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3",
+          "url": "mock://mock_node_7aa8ca98ff92_preview.mp3",
+          "duration_ms": 30000,
+          "is_mock": true,
+          "selected_at": 1791204905.6370542,
+          "full_song_path": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+          "full_song_url": "mock://mock_full_d1b4745d9131.mp3",
+          "full_song_node_id": "mock_full_d1b4745d9131",
+          "full_song_duration_ms": 90000,
+          "full_song_sha256": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c"
+        },
+        "archived_at": 1791204907.139109
+      }
+    },
+    "trace": [
+      {
+        "trace_id": "tr_f7161e3b3ed7",
+        "session_id": "cs_745088aabad8",
+        "step_index": 0,
+        "started_at": 1791204902.6515374,
+        "finished_at": 1791204902.7307515,
+        "input_json": "{\"event_id\": \"S1\", \"kind\": \"text\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\", \"action_id\": null, \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "ARCHAEOLOGY",
+        "stage_after": "ARCHAEOLOGY",
+        "revision_before": 0,
+        "revision_after": 1,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"added fact (now 1 facts)\", \"evidence\": [{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\", \"artifact\": null, \"confidence\": 1.0}], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"ARCHAEOLOGY\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 1, \"state_revision_after\": 1, \"trace_id\": \"tr_f7161e3b3ed7\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"identity_selections\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"music_spec\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"highlight_clips\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[]",
+        "tool_calls_json": "[]",
+        "validation_json": "[{\"kind\": \"archaeology_added\", \"count\": 1}, {\"kind\": \"stage_transition\", \"target\": \"IDENTITY_FITTING\", \"can_enter\": false, \"is_complete\": false, \"missing\": [\"entry_requirements_unmet_for:IDENTITY_FITTING\", \"completion_unmet_for:IDENTITY_FITTING\"]}]",
+        "notes_json": "[\"added fact: \\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\"]",
+        "input": {
+          "event_id": "S1",
+          "kind": "text",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "海边六点的柴油味",
+          "action_id": null,
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "added fact (now 1 facts)",
+          "evidence": [
+            {
+              "field": "archaeology_facts",
+              "source": "user_explicit",
+              "level": "strong",
+              "text": "海边六点的柴油味",
+              "artifact": null,
+              "confidence": 1.0
+            }
+          ],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "ARCHAEOLOGY",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 1,
+          "state_revision_after": 1,
+          "trace_id": "tr_f7161e3b3ed7",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "music_spec",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "highlight_clips",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [],
+        "tool_calls": [],
+        "validation": [
+          {
+            "kind": "archaeology_added",
+            "count": 1
+          },
+          {
+            "kind": "stage_transition",
+            "target": "IDENTITY_FITTING",
+            "can_enter": false,
+            "is_complete": false,
+            "missing": [
+              "entry_requirements_unmet_for:IDENTITY_FITTING",
+              "completion_unmet_for:IDENTITY_FITTING"
+            ]
+          }
+        ],
+        "notes": [
+          "added fact: 海边六点的柴油味"
+        ]
+      },
+      {
+        "trace_id": "tr_ec6b81fdb9d9",
+        "session_id": "cs_745088aabad8",
+        "step_index": 1,
+        "started_at": 1791204902.772352,
+        "finished_at": 1791204902.8393004,
+        "input_json": "{\"event_id\": \"S2\", \"kind\": \"text\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\", \"action_id\": null, \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "ARCHAEOLOGY",
+        "stage_after": "ARCHAEOLOGY",
+        "revision_before": 1,
+        "revision_after": 2,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"added fact (now 2 facts)\", \"evidence\": [{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\", \"artifact\": null, \"confidence\": 1.0}], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"ARCHAEOLOGY\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 2, \"state_revision_after\": 2, \"trace_id\": \"tr_ec6b81fdb9d9\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"medium\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473']\", \"artifact\": null, \"confidence\": 0.7}, {\"field\": \"identity_selections\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"music_spec\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"highlight_clips\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[]",
+        "tool_calls_json": "[]",
+        "validation_json": "[{\"kind\": \"archaeology_added\", \"count\": 2}, {\"kind\": \"stage_transition\", \"target\": \"IDENTITY_FITTING\", \"can_enter\": false, \"is_complete\": false, \"missing\": [\"entry_requirements_unmet_for:IDENTITY_FITTING\", \"completion_unmet_for:IDENTITY_FITTING\"]}]",
+        "notes_json": "[\"added fact: \\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\"]",
+        "input": {
+          "event_id": "S2",
+          "kind": "text",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "妈妈电话里的咳嗽",
+          "action_id": null,
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "added fact (now 2 facts)",
+          "evidence": [
+            {
+              "field": "archaeology_facts",
+              "source": "user_explicit",
+              "level": "strong",
+              "text": "妈妈电话里的咳嗽",
+              "artifact": null,
+              "confidence": 1.0
+            }
+          ],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "ARCHAEOLOGY",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 2,
+          "state_revision_after": 2,
+          "trace_id": "tr_ec6b81fdb9d9",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "medium",
+            "text": "['海边六点的柴油味']",
+            "artifact": null,
+            "confidence": 0.7
+          },
+          {
+            "field": "identity_selections",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "music_spec",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "highlight_clips",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [],
+        "tool_calls": [],
+        "validation": [
+          {
+            "kind": "archaeology_added",
+            "count": 2
+          },
+          {
+            "kind": "stage_transition",
+            "target": "IDENTITY_FITTING",
+            "can_enter": false,
+            "is_complete": false,
+            "missing": [
+              "entry_requirements_unmet_for:IDENTITY_FITTING",
+              "completion_unmet_for:IDENTITY_FITTING"
+            ]
+          }
+        ],
+        "notes": [
+          "added fact: 妈妈电话里的咳嗽"
+        ]
+      },
+      {
+        "trace_id": "tr_9c494b96521c",
+        "session_id": "cs_745088aabad8",
+        "step_index": 2,
+        "started_at": 1791204902.8778558,
+        "finished_at": 1791204902.957168,
+        "input_json": "{\"event_id\": \"S3\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"archaeology.confirm\", \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "ARCHAEOLOGY",
+        "stage_after": "IDENTITY_FITTING",
+        "revision_before": 2,
+        "revision_after": 3,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"action archaeology.confirm executed\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"IDENTITY_FITTING\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 3, \"state_revision_after\": 3, \"trace_id\": \"tr_9c494b96521c\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"music_spec\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"highlight_clips\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[]",
+        "tool_calls_json": "[]",
+        "validation_json": "[{\"kind\": \"stage_transition\", \"target\": \"IDENTITY_FITTING\", \"can_enter\": true, \"is_complete\": false, \"missing\": [\"completion_unmet_for:IDENTITY_FITTING\"]}]",
+        "notes_json": "[\"orchestrator.dispatch(archaeology.confirm) \\u2192 executed\"]",
+        "input": {
+          "event_id": "S3",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "archaeology.confirm",
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "action archaeology.confirm executed",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "IDENTITY_FITTING",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 3,
+          "state_revision_after": 3,
+          "trace_id": "tr_9c494b96521c",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "music_spec",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "highlight_clips",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [],
+        "tool_calls": [],
+        "validation": [
+          {
+            "kind": "stage_transition",
+            "target": "IDENTITY_FITTING",
+            "can_enter": true,
+            "is_complete": false,
+            "missing": [
+              "completion_unmet_for:IDENTITY_FITTING"
+            ]
+          }
+        ],
+        "notes": [
+          "orchestrator.dispatch(archaeology.confirm) → executed"
+        ]
+      },
+      {
+        "trace_id": "tr_1787b4822877",
+        "session_id": "cs_745088aabad8",
+        "step_index": 3,
+        "started_at": 1791204903.0192697,
+        "finished_at": 1791204903.1596642,
+        "input_json": "{\"event_id\": \"S4\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"identity.keep\", \"action_payload\": {\"slot\": \"A\"}, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "IDENTITY_FITTING",
+        "stage_after": "VARIABLE_SETUP",
+        "revision_before": 3,
+        "revision_after": 5,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"action identity.keep executed\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"VARIABLE_SETUP\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 5, \"state_revision_after\": 5, \"trace_id\": \"tr_1787b4822877\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"music_spec\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"highlight_clips\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[]",
+        "tool_calls_json": "[]",
+        "validation_json": "[{\"kind\": \"stage_transition\", \"target\": \"VARIABLE_SETUP\", \"can_enter\": false, \"is_complete\": false, \"missing\": [\"entry_requirements_unmet_for:VARIABLE_SETUP\", \"completion_unmet_for:VARIABLE_SETUP\"]}]",
+        "notes_json": "[\"orchestrator.dispatch(identity.keep) \\u2192 executed\"]",
+        "input": {
+          "event_id": "S4",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "identity.keep",
+          "action_payload": {
+            "slot": "A"
+          },
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "action identity.keep executed",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "VARIABLE_SETUP",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 5,
+          "state_revision_after": 5,
+          "trace_id": "tr_1787b4822877",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "music_spec",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "highlight_clips",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [],
+        "tool_calls": [],
+        "validation": [
+          {
+            "kind": "stage_transition",
+            "target": "VARIABLE_SETUP",
+            "can_enter": false,
+            "is_complete": false,
+            "missing": [
+              "entry_requirements_unmet_for:VARIABLE_SETUP",
+              "completion_unmet_for:VARIABLE_SETUP"
+            ]
+          }
+        ],
+        "notes": [
+          "orchestrator.dispatch(identity.keep) → executed"
+        ]
+      },
+      {
+        "trace_id": "tr_c2535052bf72",
+        "session_id": "cs_745088aabad8",
+        "step_index": 4,
+        "started_at": 1791204903.2121878,
+        "finished_at": 1791204903.3570032,
+        "input_json": "{\"event_id\": \"S5\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"variable.confirm\", \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "VARIABLE_SETUP",
+        "stage_after": "PROPOSAL_REVIEW",
+        "revision_before": 5,
+        "revision_after": 6,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"action variable.confirm executed\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"PROPOSAL_REVIEW\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 6, \"state_revision_after\": 6, \"trace_id\": \"tr_c2535052bf72\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"[{'action': 'keep', 'slot': 'A'}]\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"music_spec\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"highlight_clips\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[]",
+        "tool_calls_json": "[]",
+        "validation_json": "[{\"kind\": \"stage_transition\", \"target\": \"PROPOSAL_REVIEW\", \"can_enter\": true, \"is_complete\": false, \"missing\": [\"completion_unmet_for:PROPOSAL_REVIEW\"]}]",
+        "notes_json": "[\"orchestrator.dispatch(variable.confirm) \\u2192 executed\"]",
+        "input": {
+          "event_id": "S5",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "variable.confirm",
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "action variable.confirm executed",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "PROPOSAL_REVIEW",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 6,
+          "state_revision_after": 6,
+          "trace_id": "tr_c2535052bf72",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "[{'action': 'keep', 'slot': 'A'}]",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "music_spec",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "highlight_clips",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [],
+        "tool_calls": [],
+        "validation": [
+          {
+            "kind": "stage_transition",
+            "target": "PROPOSAL_REVIEW",
+            "can_enter": true,
+            "is_complete": false,
+            "missing": [
+              "completion_unmet_for:PROPOSAL_REVIEW"
+            ]
+          }
+        ],
+        "notes": [
+          "orchestrator.dispatch(variable.confirm) → executed"
+        ]
+      },
+      {
+        "trace_id": "tr_c9cf3c7f3634",
+        "session_id": "cs_745088aabad8",
+        "step_index": 5,
+        "started_at": 1791204903.3976371,
+        "finished_at": 1791204905.5964215,
+        "input_json": "{\"event_id\": \"S6\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"proposal.confirm\", \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "PROPOSAL_REVIEW",
+        "stage_after": "HIGHLIGHT_REVIEW",
+        "revision_before": 6,
+        "revision_after": 8,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"generated READY clips\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"HIGHLIGHT_REVIEW\", \"next_stage\": null, \"tool_calls\": [{\"tool_id\": \"music.generate_candidates\", \"arguments\": {\"prompt\": \"\\u4e00\\u9996\\u4e2d\\u6587indie\\u6b4c\\u66f2,BPM 88,\\u8c03\\u5f0f C,\\u914d\\u5668\\u5305\\u62ec piano\\u3001ambient pad,\\u4e2d\\u6587\\u5973\\u58f0\\u6f14\\u5531,verse_\", \"lyrics_len\": 46, \"language\": \"zh\", \"slots\": [\"A\", \"B\", \"C\"]}, \"result\": {\"status\": \"READY\", \"slots\": [{\"slot\": \"A\", \"status\": \"READY\", \"node_id\": \"mock_node_7aa8ca98ff92\"}, {\"slot\": \"B\", \"status\": \"READY\", \"node_id\": \"mock_node_d6d02c0fd11f\"}, {\"slot\": \"C\", \"status\": \"READY\", \"node_id\": \"mock_node_d1b77172fba4\"}]}, \"error\": null, \"started_at\": 1791204903.3980427, \"finished_at\": 1791204905.4273129, \"duration_ms\": 2029.2689800262451}], \"state_revision_before\": 8, \"state_revision_after\": 8, \"trace_id\": \"tr_c9cf3c7f3634\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"[{'action': 'keep', 'slot': 'A'}]\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"music_spec\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"mutation\", \"level\": \"strong\", \"text\": \"[verse]\\n\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\\n\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\\n\\n[chorus]\\n\\u4f60\\u4e0d\\u5728 \\u4f46\\u5f71\\u5b50\\u8fd8\\u5728\\n\", \"artifact\": \"proposal:cs_745088aabad8\", \"confidence\": 0.95}, {\"field\": \"highlight_clips\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[{\"field\": \"action.consume_quota\", \"level\": \"medium\", \"rationale\": \"proposal.confirm \\u89e6\\u53d1 3 \\u8def\\u97f3\\u4e50\\u751f\\u6210,\\u6d88\\u8017\\u751f\\u6210\\u914d\\u989d(\\u4e0d\\u53ef\\u64a4\\u9500)\", \"mitigation\": \"\\u5931\\u8d25\\u65f6\\u9000\\u8fd8\\u914d\\u989d / \\u90e8\\u5206\\u6210\\u529f\\u65f6\\u964d\\u7ea7\\u5448\\u73b0\"}, {\"field\": \"action.irreversible\", \"level\": \"medium\", \"rationale\": \"\\u751f\\u6210\\u4e00\\u65e6\\u5f00\\u59cb\\u65e0\\u6cd5\\u53d6\\u6d88;tool \\u5931\\u8d25\\u9700\\u7528\\u6237\\u51b3\\u7b56\", \"mitigation\": \"tool \\u8d85\\u65f6\\u81ea\\u52a8\\u53d6\\u6d88 + \\u914d\\u989d\\u56de\\u6eda\"}]",
+        "tool_calls_json": "[{\"tool_id\": \"music.generate_candidates\", \"arguments\": {\"prompt\": \"\\u4e00\\u9996\\u4e2d\\u6587indie\\u6b4c\\u66f2,BPM 88,\\u8c03\\u5f0f C,\\u914d\\u5668\\u5305\\u62ec piano\\u3001ambient pad,\\u4e2d\\u6587\\u5973\\u58f0\\u6f14\\u5531,verse_\", \"lyrics_len\": 46, \"language\": \"zh\", \"slots\": [\"A\", \"B\", \"C\"]}, \"result\": {\"status\": \"READY\", \"slots\": [{\"slot\": \"A\", \"status\": \"READY\", \"node_id\": \"mock_node_7aa8ca98ff92\"}, {\"slot\": \"B\", \"status\": \"READY\", \"node_id\": \"mock_node_d6d02c0fd11f\"}, {\"slot\": \"C\", \"status\": \"READY\", \"node_id\": \"mock_node_d1b77172fba4\"}]}, \"error\": null, \"started_at\": 1791204903.3980427, \"finished_at\": 1791204905.4273129, \"duration_ms\": 2029.2689800262451}]",
+        "validation_json": "[{\"kind\": \"stage_transition\", \"target\": \"HIGHLIGHT_REVIEW\", \"can_enter\": true, \"is_complete\": false, \"missing\": [\"completion_unmet_for:HIGHLIGHT_REVIEW\"]}]",
+        "notes_json": "[\"stage advanced: PROPOSAL_REVIEW -> HIGHLIGHT_REVIEW\"]",
+        "input": {
+          "event_id": "S6",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "proposal.confirm",
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "generated READY clips",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "HIGHLIGHT_REVIEW",
+          "next_stage": null,
+          "tool_calls": [
+            {
+              "tool_id": "music.generate_candidates",
+              "arguments": {
+                "prompt": "一首中文indie歌曲,BPM 88,调式 C,配器包括 piano、ambient pad,中文女声演唱,verse_",
+                "lyrics_len": 46,
+                "language": "zh",
+                "slots": [
+                  "A",
+                  "B",
+                  "C"
+                ]
+              },
+              "result": {
+                "status": "READY",
+                "slots": [
+                  {
+                    "slot": "A",
+                    "status": "READY",
+                    "node_id": "mock_node_7aa8ca98ff92"
+                  },
+                  {
+                    "slot": "B",
+                    "status": "READY",
+                    "node_id": "mock_node_d6d02c0fd11f"
+                  },
+                  {
+                    "slot": "C",
+                    "status": "READY",
+                    "node_id": "mock_node_d1b77172fba4"
+                  }
+                ]
+              },
+              "error": null,
+              "started_at": 1791204903.3980427,
+              "finished_at": 1791204905.4273129,
+              "duration_ms": 2029.2689800262451
+            }
+          ],
+          "state_revision_before": 8,
+          "state_revision_after": 8,
+          "trace_id": "tr_c9cf3c7f3634",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "[{'action': 'keep', 'slot': 'A'}]",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "music_spec",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "mutation",
+            "level": "strong",
+            "text": "[verse]\n海边六点的柴油味\n妈妈电话里的咳嗽\n\n[chorus]\n你不在 但影子还在\n",
+            "artifact": "proposal:cs_745088aabad8",
+            "confidence": 0.95
+          },
+          {
+            "field": "highlight_clips",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [
+          {
+            "field": "action.consume_quota",
+            "level": "medium",
+            "rationale": "proposal.confirm 触发 3 路音乐生成,消耗生成配额(不可撤销)",
+            "mitigation": "失败时退还配额 / 部分成功时降级呈现"
+          },
+          {
+            "field": "action.irreversible",
+            "level": "medium",
+            "rationale": "生成一旦开始无法取消;tool 失败需用户决策",
+            "mitigation": "tool 超时自动取消 + 配额回滚"
+          }
+        ],
+        "tool_calls": [
+          {
+            "tool_id": "music.generate_candidates",
+            "arguments": {
+              "prompt": "一首中文indie歌曲,BPM 88,调式 C,配器包括 piano、ambient pad,中文女声演唱,verse_",
+              "lyrics_len": 46,
+              "language": "zh",
+              "slots": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "result": {
+              "status": "READY",
+              "slots": [
+                {
+                  "slot": "A",
+                  "status": "READY",
+                  "node_id": "mock_node_7aa8ca98ff92"
+                },
+                {
+                  "slot": "B",
+                  "status": "READY",
+                  "node_id": "mock_node_d6d02c0fd11f"
+                },
+                {
+                  "slot": "C",
+                  "status": "READY",
+                  "node_id": "mock_node_d1b77172fba4"
+                }
+              ]
+            },
+            "error": null,
+            "started_at": 1791204903.3980427,
+            "finished_at": 1791204905.4273129,
+            "duration_ms": 2029.2689800262451
+          }
+        ],
+        "validation": [
+          {
+            "kind": "stage_transition",
+            "target": "HIGHLIGHT_REVIEW",
+            "can_enter": true,
+            "is_complete": false,
+            "missing": [
+              "completion_unmet_for:HIGHLIGHT_REVIEW"
+            ]
+          }
+        ],
+        "notes": [
+          "stage advanced: PROPOSAL_REVIEW -> HIGHLIGHT_REVIEW"
+        ]
+      },
+      {
+        "trace_id": "tr_f0396ceeae54",
+        "session_id": "cs_745088aabad8",
+        "step_index": 6,
+        "started_at": 1791204905.636852,
+        "finished_at": 1791204906.9815907,
+        "input_json": "{\"event_id\": \"S7\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"highlight.select\", \"action_payload\": {\"slot\": \"A\"}, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "HIGHLIGHT_REVIEW",
+        "stage_after": "FULL_REVIEW",
+        "revision_before": 8,
+        "revision_after": 10,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"selected slot A, full song generated\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"FULL_REVIEW\", \"next_stage\": null, \"tool_calls\": [{\"tool_id\": \"music.generate_full\", \"arguments\": {\"node_id\": \"mock_node_7aa8ca98ff92\", \"slot\": \"A\", \"is_mock\": true}, \"result\": {\"ok\": true, \"full_song_node_id\": \"mock_full_d1b4745d9131\", \"duration_ms\": 90000}, \"error\": null, \"started_at\": 1791204905.684101, \"finished_at\": 1791204906.9127347, \"duration_ms\": 1228.6326885223389}], \"state_revision_before\": 10, \"state_revision_after\": 10, \"trace_id\": \"tr_f0396ceeae54\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"[{'action': 'keep', 'slot': 'A'}]\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"music_spec\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"mutation\", \"level\": \"strong\", \"text\": \"[verse]\\n\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\\n\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\\n\\n[chorus]\\n\\u4f60\\u4e0d\\u5728 \\u4f46\\u5f71\\u5b50\\u8fd8\\u5728\\n\", \"artifact\": \"proposal:cs_745088aabad8\", \"confidence\": 0.95}, {\"field\": \"highlight_clips\", \"source\": \"tool\", \"level\": \"strong\", \"text\": \"3/3 READY\", \"artifact\": \"highlight:cs_745088aabad8\", \"confidence\": 1.0}, {\"field\": \"selected_highlight\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[{\"field\": \"action.full_song_generate\", \"level\": \"medium\", \"rationale\": \"\\u9009\\u62e9 highlight \\u540e\\u4f1a\\u751f\\u6210\\u5b8c\\u6574\\u6b4c\\u66f2(60s+ \\u914d\\u989d)\", \"mitigation\": null}]",
+        "tool_calls_json": "[{\"tool_id\": \"music.generate_full\", \"arguments\": {\"node_id\": \"mock_node_7aa8ca98ff92\", \"slot\": \"A\", \"is_mock\": true}, \"result\": {\"ok\": true, \"full_song_node_id\": \"mock_full_d1b4745d9131\", \"duration_ms\": 90000}, \"error\": null, \"started_at\": 1791204905.684101, \"finished_at\": 1791204906.9127347, \"duration_ms\": 1228.6326885223389}]",
+        "validation_json": "[{\"kind\": \"stage_transition\", \"target\": \"FULL_REVIEW\", \"can_enter\": false, \"is_complete\": false, \"missing\": [\"entry_requirements_unmet_for:FULL_REVIEW\", \"completion_unmet_for:FULL_REVIEW\"]}]",
+        "notes_json": "[\"stage advanced: HIGHLIGHT_REVIEW \\u2192 FULL_REVIEW\"]",
+        "input": {
+          "event_id": "S7",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "highlight.select",
+          "action_payload": {
+            "slot": "A"
+          },
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "selected slot A, full song generated",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "FULL_REVIEW",
+          "next_stage": null,
+          "tool_calls": [
+            {
+              "tool_id": "music.generate_full",
+              "arguments": {
+                "node_id": "mock_node_7aa8ca98ff92",
+                "slot": "A",
+                "is_mock": true
+              },
+              "result": {
+                "ok": true,
+                "full_song_node_id": "mock_full_d1b4745d9131",
+                "duration_ms": 90000
+              },
+              "error": null,
+              "started_at": 1791204905.684101,
+              "finished_at": 1791204906.9127347,
+              "duration_ms": 1228.6326885223389
+            }
+          ],
+          "state_revision_before": 10,
+          "state_revision_after": 10,
+          "trace_id": "tr_f0396ceeae54",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "[{'action': 'keep', 'slot': 'A'}]",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "music_spec",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "mutation",
+            "level": "strong",
+            "text": "[verse]\n海边六点的柴油味\n妈妈电话里的咳嗽\n\n[chorus]\n你不在 但影子还在\n",
+            "artifact": "proposal:cs_745088aabad8",
+            "confidence": 0.95
+          },
+          {
+            "field": "highlight_clips",
+            "source": "tool",
+            "level": "strong",
+            "text": "3/3 READY",
+            "artifact": "highlight:cs_745088aabad8",
+            "confidence": 1.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [
+          {
+            "field": "action.full_song_generate",
+            "level": "medium",
+            "rationale": "选择 highlight 后会生成完整歌曲(60s+ 配额)",
+            "mitigation": null
+          }
+        ],
+        "tool_calls": [
+          {
+            "tool_id": "music.generate_full",
+            "arguments": {
+              "node_id": "mock_node_7aa8ca98ff92",
+              "slot": "A",
+              "is_mock": true
+            },
+            "result": {
+              "ok": true,
+              "full_song_node_id": "mock_full_d1b4745d9131",
+              "duration_ms": 90000
+            },
+            "error": null,
+            "started_at": 1791204905.684101,
+            "finished_at": 1791204906.9127347,
+            "duration_ms": 1228.6326885223389
+          }
+        ],
+        "validation": [
+          {
+            "kind": "stage_transition",
+            "target": "FULL_REVIEW",
+            "can_enter": false,
+            "is_complete": false,
+            "missing": [
+              "entry_requirements_unmet_for:FULL_REVIEW",
+              "completion_unmet_for:FULL_REVIEW"
+            ]
+          }
+        ],
+        "notes": [
+          "stage advanced: HIGHLIGHT_REVIEW → FULL_REVIEW"
+        ]
+      },
+      {
+        "trace_id": "tr_5b704ca30b2d",
+        "session_id": "cs_745088aabad8",
+        "step_index": 7,
+        "started_at": 1791204907.022722,
+        "finished_at": 1791204907.1003706,
+        "input_json": "{\"event_id\": \"S8\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"full.confirm\", \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": null, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "FULL_REVIEW",
+        "stage_after": "CONFIRMED",
+        "revision_before": 10,
+        "revision_after": 11,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"action review.approve executed\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"CONFIRMED\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 11, \"state_revision_after\": 11, \"trace_id\": \"tr_5b704ca30b2d\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"[{'action': 'keep', 'slot': 'A'}]\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"music_spec\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"mutation\", \"level\": \"strong\", \"text\": \"[verse]\\n\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\\n\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\\n\\n[chorus]\\n\\u4f60\\u4e0d\\u5728 \\u4f46\\u5f71\\u5b50\\u8fd8\\u5728\\n\", \"artifact\": \"proposal:cs_745088aabad8\", \"confidence\": 0.95}, {\"field\": \"highlight_clips\", \"source\": \"tool\", \"level\": \"strong\", \"text\": \"3/3 READY\", \"artifact\": \"highlight:cs_745088aabad8\", \"confidence\": 1.0}, {\"field\": \"selected_highlight\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'slot': 'A', 'node_id': 'mock_node_7aa8ca98ff92', 'preview_path': '/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3', 'url': 'mock://mock_node_7aa8ca98ff92_preview.mp3', \", \"artifact\": \"highlight_choice:A\", \"confidence\": 1.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"tool\", \"level\": \"strong\", \"text\": \"path=/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3 sha256=3f17fe51fee63bfb...\", \"artifact\": \"/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3\", \"confidence\": 1.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[]",
+        "tool_calls_json": "[]",
+        "validation_json": "[{\"kind\": \"stage_transition\", \"target\": \"ARCHIVE\", \"can_enter\": true, \"is_complete\": false, \"missing\": [\"completion_unmet_for:ARCHIVE\"]}]",
+        "notes_json": "[\"orchestrator.dispatch(review.approve) \\u2192 executed\"]",
+        "input": {
+          "event_id": "S8",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "full.confirm",
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": null,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "action review.approve executed",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "CONFIRMED",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 11,
+          "state_revision_after": 11,
+          "trace_id": "tr_5b704ca30b2d",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "[{'action': 'keep', 'slot': 'A'}]",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "music_spec",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "mutation",
+            "level": "strong",
+            "text": "[verse]\n海边六点的柴油味\n妈妈电话里的咳嗽\n\n[chorus]\n你不在 但影子还在\n",
+            "artifact": "proposal:cs_745088aabad8",
+            "confidence": 0.95
+          },
+          {
+            "field": "highlight_clips",
+            "source": "tool",
+            "level": "strong",
+            "text": "3/3 READY",
+            "artifact": "highlight:cs_745088aabad8",
+            "confidence": 1.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'slot': 'A', 'node_id': 'mock_node_7aa8ca98ff92', 'preview_path': '/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3', 'url': 'mock://mock_node_7aa8ca98ff92_preview.mp3', ",
+            "artifact": "highlight_choice:A",
+            "confidence": 1.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "tool",
+            "level": "strong",
+            "text": "path=/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3 sha256=3f17fe51fee63bfb...",
+            "artifact": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+            "confidence": 1.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [],
+        "tool_calls": [],
+        "validation": [
+          {
+            "kind": "stage_transition",
+            "target": "ARCHIVE",
+            "can_enter": true,
+            "is_complete": false,
+            "missing": [
+              "completion_unmet_for:ARCHIVE"
+            ]
+          }
+        ],
+        "notes": [
+          "orchestrator.dispatch(review.approve) → executed"
+        ]
+      },
+      {
+        "trace_id": "tr_2c08617e47e0",
+        "session_id": "cs_745088aabad8",
+        "step_index": 8,
+        "started_at": 1791204907.1389093,
+        "finished_at": 1791204907.2035809,
+        "input_json": "{\"event_id\": \"S9\", \"kind\": \"action\", \"actor_user_id\": \"u_e1\", \"chat_id\": \"c_e1\", \"text\": \"\", \"action_id\": \"profile.archive\", \"action_payload\": null, \"tool_callback\": null, \"continue_yes_no\": null, \"confirm_risk\": true, \"selected_option\": null, \"occurred_at\": 0.0}",
+        "stage_before": "CONFIRMED",
+        "stage_after": "ARCHIVE",
+        "revision_before": 11,
+        "revision_after": 12,
+        "decision_json": "{\"kind\": \"continue\", \"reasoning\": \"profile archived\", \"evidence\": [], \"risk_signals\": [], \"missing_fields\": [], \"ask_options\": [], \"risk_level\": \"low\", \"consequence\": null, \"confidence\": 1.0, \"stage\": \"ARCHIVE\", \"next_stage\": null, \"tool_calls\": [], \"state_revision_before\": 12, \"state_revision_after\": 12, \"trace_id\": \"tr_2c08617e47e0\", \"notes\": []}",
+        "evidence_json": "[{\"field\": \"archaeology_facts\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"['\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473', '\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd']\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"identity_selections\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"[{'action': 'keep', 'slot': 'A'}]\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"music_spec\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}\", \"artifact\": null, \"confidence\": 1.0}, {\"field\": \"current_proposal.lyrics\", \"source\": \"mutation\", \"level\": \"strong\", \"text\": \"[verse]\\n\\u6d77\\u8fb9\\u516d\\u70b9\\u7684\\u67f4\\u6cb9\\u5473\\n\\u5988\\u5988\\u7535\\u8bdd\\u91cc\\u7684\\u54b3\\u55fd\\n\\n[chorus]\\n\\u4f60\\u4e0d\\u5728 \\u4f46\\u5f71\\u5b50\\u8fd8\\u5728\\n\", \"artifact\": \"proposal:cs_745088aabad8\", \"confidence\": 0.95}, {\"field\": \"highlight_clips\", \"source\": \"tool\", \"level\": \"strong\", \"text\": \"3/3 READY\", \"artifact\": \"highlight:cs_745088aabad8\", \"confidence\": 1.0}, {\"field\": \"selected_highlight\", \"source\": \"user_explicit\", \"level\": \"strong\", \"text\": \"{'slot': 'A', 'node_id': 'mock_node_7aa8ca98ff92', 'preview_path': '/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3', 'url': 'mock://mock_node_7aa8ca98ff92_preview.mp3', \", \"artifact\": \"highlight_choice:A\", \"confidence\": 1.0}, {\"field\": \"selected_highlight.full_song\", \"source\": \"tool\", \"level\": \"strong\", \"text\": \"path=/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3 sha256=3f17fe51fee63bfb...\", \"artifact\": \"/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3\", \"confidence\": 1.0}, {\"field\": \"personal_style_profile\", \"source\": \"default\", \"level\": \"absent\", \"text\": null, \"artifact\": null, \"confidence\": 0.0}]",
+        "risk_json": "[{\"field\": \"action.long_term_memory\", \"level\": \"high\", \"rationale\": \"profile.archive \\u5199\\u5165\\u4e2a\\u4eba\\u98ce\\u683c\\u6863\\u6848,\\u5f71\\u54cd\\u540e\\u7eed\\u6240\\u6709\\u751f\\u6210\", \"mitigation\": \"\\u5fc5\\u987b\\u7528\\u6237 confirm \\u540e\\u624d\\u5199;\\u63d0\\u4f9b\\u64a4\\u9500\\u529f\\u80fd\"}, {\"field\": \"catalog.profile.archive\", \"level\": \"high\", \"rationale\": \"action profile.archive \\u6807\\u8bb0\\u4e3a high risk\", \"mitigation\": null}]",
+        "tool_calls_json": "[]",
+        "validation_json": "[]",
+        "notes_json": "[\"personal_style_profile archived, stage \\u2192 ARCHIVE\"]",
+        "input": {
+          "event_id": "S9",
+          "kind": "action",
+          "actor_user_id": "u_e1",
+          "chat_id": "c_e1",
+          "text": "",
+          "action_id": "profile.archive",
+          "action_payload": null,
+          "tool_callback": null,
+          "continue_yes_no": null,
+          "confirm_risk": true,
+          "selected_option": null,
+          "occurred_at": 0.0
+        },
+        "decision": {
+          "kind": "continue",
+          "reasoning": "profile archived",
+          "evidence": [],
+          "risk_signals": [],
+          "missing_fields": [],
+          "ask_options": [],
+          "risk_level": "low",
+          "consequence": null,
+          "confidence": 1.0,
+          "stage": "ARCHIVE",
+          "next_stage": null,
+          "tool_calls": [],
+          "state_revision_before": 12,
+          "state_revision_after": 12,
+          "trace_id": "tr_2c08617e47e0",
+          "notes": []
+        },
+        "evidence": [
+          {
+            "field": "archaeology_facts",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "['海边六点的柴油味', '妈妈电话里的咳嗽']",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "identity_selections",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "[{'action': 'keep', 'slot': 'A'}]",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "music_spec",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'bpm': 88, 'key': 'C', 'genre': 'indie', 'instruments': ['piano', 'ambient pad']}",
+            "artifact": null,
+            "confidence": 1.0
+          },
+          {
+            "field": "current_proposal.lyrics",
+            "source": "mutation",
+            "level": "strong",
+            "text": "[verse]\n海边六点的柴油味\n妈妈电话里的咳嗽\n\n[chorus]\n你不在 但影子还在\n",
+            "artifact": "proposal:cs_745088aabad8",
+            "confidence": 0.95
+          },
+          {
+            "field": "highlight_clips",
+            "source": "tool",
+            "level": "strong",
+            "text": "3/3 READY",
+            "artifact": "highlight:cs_745088aabad8",
+            "confidence": 1.0
+          },
+          {
+            "field": "selected_highlight",
+            "source": "user_explicit",
+            "level": "strong",
+            "text": "{'slot': 'A', 'node_id': 'mock_node_7aa8ca98ff92', 'preview_path': '/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3', 'url': 'mock://mock_node_7aa8ca98ff92_preview.mp3', ",
+            "artifact": "highlight_choice:A",
+            "confidence": 1.0
+          },
+          {
+            "field": "selected_highlight.full_song",
+            "source": "tool",
+            "level": "strong",
+            "text": "path=/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3 sha256=3f17fe51fee63bfb...",
+            "artifact": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+            "confidence": 1.0
+          },
+          {
+            "field": "personal_style_profile",
+            "source": "default",
+            "level": "absent",
+            "text": null,
+            "artifact": null,
+            "confidence": 0.0
+          }
+        ],
+        "risk": [
+          {
+            "field": "action.long_term_memory",
+            "level": "high",
+            "rationale": "profile.archive 写入个人风格档案,影响后续所有生成",
+            "mitigation": "必须用户 confirm 后才写;提供撤销功能"
+          },
+          {
+            "field": "catalog.profile.archive",
+            "level": "high",
+            "rationale": "action profile.archive 标记为 high risk",
+            "mitigation": null
+          }
+        ],
+        "tool_calls": [],
+        "validation": [],
+        "notes": [
+          "personal_style_profile archived, stage → ARCHIVE"
+        ]
+      }
+    ]
+  },
+  "E2_artifacts": {
+    "manifest": [
+      {
+        "type": "highlight_preview",
+        "slot": "A",
+        "path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3",
+        "exists": true,
+        "size_bytes": 30518,
+        "sha256": "c7b7a31f226baa996d3b4d2f917421425a100440bd79205bbd2d1eb36ef8cfb4",
+        "is_valid_mp3": true,
+        "duration_sec": 30.066939
+      },
+      {
+        "type": "highlight_preview",
+        "slot": "B",
+        "path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_d6d02c0fd11f_preview.mp3",
+        "exists": true,
+        "size_bytes": 30570,
+        "sha256": "6ce0959f446f20f0d7c3780326b68e020c7961663376c96c8b2dc7ea27ea8d7e",
+        "is_valid_mp3": true,
+        "duration_sec": 30.066939
+      },
+      {
+        "type": "highlight_preview",
+        "slot": "C",
+        "path": "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_d1b77172fba4_preview.mp3",
+        "exists": true,
+        "size_bytes": 30622,
+        "sha256": "588aa20835fc5a23e184cddb7596d13ea66640505a5abd8e4b9042fad3ddfba7",
+        "is_valid_mp3": true,
+        "duration_sec": 30.066939
+      },
+      {
+        "type": "full_song",
+        "slot": "A",
+        "path": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+        "exists": true,
+        "size_bytes": 89875,
+        "sha256": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c",
+        "is_valid_mp3": true,
+        "duration_sec": 90.070204
+      }
+    ]
+  },
+  "E3_discrimination": {
+    "probes": [
+      {
+        "probe": "事实-海边",
+        "input": {
+          "text": "海边六点的柴油味"
+        },
+        "expected_semantics": "记录素材/继续",
+        "decision": "ask",
+        "reasoning": "current stage is IDENTITY_FITTING, cannot add fact directly",
+        "risk_signals": [],
+        "missing_fields": []
+      },
+      {
+        "probe": "事实-电话",
+        "input": {
+          "text": "妈妈电话里的咳嗽"
+        },
+        "expected_semantics": "记录素材/继续",
+        "decision": "ask",
+        "reasoning": "current stage is IDENTITY_FITTING, cannot add fact directly",
+        "risk_signals": [],
+        "missing_fields": []
+      },
+      {
+        "probe": "事实-童年",
+        "input": {
+          "text": "小时候外婆家的樟脑味"
+        },
+        "expected_semantics": "记录素材/继续",
+        "decision": "ask",
+        "reasoning": "current stage is IDENTITY_FITTING, cannot add fact directly",
+        "risk_signals": [],
+        "missing_fields": []
+      },
+      {
+        "probe": "空输入",
+        "input": {
+          "text": ""
+        },
+        "expected_semantics": "ASK(信息不足)",
+        "decision": "ask",
+        "reasoning": "输入信息不足(有效内容 < 4 字符或无法判定意图),不猜测 | intent=unknown len=0",
+        "risk_signals": [],
+        "missing_fields": [
+          "*"
+        ]
+      },
+      {
+        "probe": "单字符",
+        "input": {
+          "text": "嗯"
+        },
+        "expected_semantics": "ASK(信息不足)",
+        "decision": "ask",
+        "reasoning": "输入信息不足(有效内容 < 4 字符或无法判定意图),不猜测 | intent=unclear len=1",
+        "risk_signals": [],
+        "missing_fields": [
+          "*"
+        ]
+      },
+      {
+        "probe": "纯 emoji",
+        "input": {
+          "text": "🎵🎶"
+        },
+        "expected_semantics": "不崩,继续/ASK",
+        "decision": "ask",
+        "reasoning": "输入信息不足(有效内容 < 4 字符或无法判定意图),不猜测 | intent=unclear len=2",
+        "risk_signals": [],
+        "missing_fields": [
+          "*"
+        ]
+      },
+      {
+        "probe": "确认词",
+        "input": {
+          "text": "确认"
+        },
+        "expected_semantics": "CONTINUE",
+        "decision": "ask",
+        "reasoning": "输入信息不足(有效内容 < 4 字符或无法判定意图),不猜测 | intent=confirm len=2",
+        "risk_signals": [],
+        "missing_fields": [
+          "*"
+        ]
+      },
+      {
+        "probe": "取消词",
+        "input": {
+          "text": "取消"
+        },
+        "expected_semantics": "STOP",
+        "decision": "ask",
+        "reasoning": "输入信息不足(有效内容 < 4 字符或无法判定意图),不猜测 | intent=cancel len=2",
+        "risk_signals": [],
+        "missing_fields": [
+          "*"
+        ]
+      },
+      {
+        "probe": "编辑意图",
+        "input": {
+          "text": "歌词改一下"
+        },
+        "expected_semantics": "ASK(改写方向)",
+        "decision": "continue",
+        "reasoning": "default continue",
+        "risk_signals": [],
+        "missing_fields": []
+      },
+      {
+        "probe": "合规红线-克隆",
+        "input": {
+          "text": "用我妈妈的声音唱"
+        },
+        "expected_semantics": "STOP(合规拒绝)",
+        "decision": "stop",
+        "reasoning": "forbidden:compliance.voice_clone",
+        "risk_signals": [
+          "compliance.voice_clone"
+        ],
+        "missing_fields": []
+      },
+      {
+        "probe": "合规红线-模仿",
+        "input": {
+          "text": "模仿我朋友的声音"
+        },
+        "expected_semantics": "STOP(合规拒绝)",
+        "decision": "stop",
+        "reasoning": "forbidden:compliance.voice_clone",
+        "risk_signals": [
+          "compliance.voice_clone"
+        ],
+        "missing_fields": []
+      },
+      {
+        "probe": "PII-身份证",
+        "input": {
+          "text": "我的身份证 110101199001011234"
+        },
+        "expected_semantics": "触发 PII 信号",
+        "decision": "confirm",
+        "reasoning": "高影响动作需用户确认:1 signals; overall=medium",
+        "risk_signals": [
+          "compliance.pii"
+        ],
+        "missing_fields": [
+          "compliance.pii"
+        ]
+      },
+      {
+        "probe": "PII-手机号",
+        "input": {
+          "text": "手机号 13800138000"
+        },
+        "expected_semantics": "触发 PII 信号",
+        "decision": "confirm",
+        "reasoning": "高影响动作需用户确认:1 signals; overall=medium",
+        "risk_signals": [
+          "compliance.pii"
+        ],
+        "missing_fields": [
+          "compliance.pii"
+        ]
+      },
+      {
+        "probe": "跳转阶段-归档",
+        "input": {
+          "action_id": "profile.archive"
+        },
+        "expected_semantics": "CONFIRM(高风险)",
+        "decision": "confirm",
+        "reasoning": "高影响动作需用户确认:2 signals; overall=high",
+        "risk_signals": [
+          "action.long_term_memory",
+          "catalog.profile.archive"
+        ],
+        "missing_fields": [
+          "action.long_term_memory",
+          "catalog.profile.archive"
+        ]
+      },
+      {
+        "probe": "跳转阶段-重置",
+        "input": {
+          "action_id": "session.reset_all"
+        },
+        "expected_semantics": "CONFIRM(破坏性)",
+        "decision": "confirm",
+        "reasoning": "高影响动作需用户确认:1 signals; overall=high",
+        "risk_signals": [
+          "action.destructive"
+        ],
+        "missing_fields": [
+          "action.destructive"
+        ]
+      },
+      {
+        "probe": "合法动作-素材确认",
+        "input": {
+          "action_id": "archaeology.confirm"
+        },
+        "expected_semantics": "CONTINUE/执行",
+        "decision": "stop",
+        "reasoning": "action rejected: Action archaeology.confirm not allowed in stage IDENTITY_FITTING (allowed: ['ARCHAE",
+        "risk_signals": [
+          "orchestrator.archaeology.confirm"
+        ],
+        "missing_fields": []
+      },
+      {
+        "probe": "合法动作-身份选择",
+        "input": {
+          "action_id": "identity.keep",
+          "action_payload": {
+            "slot": "A"
+          }
+        },
+        "expected_semantics": "CONTINUE/执行",
+        "decision": "continue",
+        "reasoning": "action identity.keep executed",
+        "risk_signals": [],
+        "missing_fields": []
+      },
+      {
+        "probe": "不存在的动作",
+        "input": {
+          "action_id": "does.not.exist"
+        },
+        "expected_semantics": "STOP/REJECTED",
+        "decision": "stop",
+        "reasoning": "action rejected: Unknown action_id: does.not.exist",
+        "risk_signals": [
+          "orchestrator.does.not.exist"
+        ],
+        "missing_fields": []
+      },
+      {
+        "probe": "过期的槽位",
+        "input": {
+          "action_id": "clip.select",
+          "action_payload": {
+            "slot": "Z"
+          }
+        },
+        "expected_semantics": "ASK/STOP(不擅自)",
+        "decision": "ask",
+        "reasoning": "slot Z not ready",
+        "risk_signals": [],
+        "missing_fields": []
+      },
+      {
+        "probe": "显式风险确认",
+        "input": {
+          "action_id": "profile.archive",
+          "confirm_risk": true
+        },
+        "expected_semantics": "继续执行",
+        "decision": "continue",
+        "reasoning": "profile archived",
+        "risk_signals": [],
+        "missing_fields": []
+      }
+    ],
+    "distinct_decisions": [
+      "ask",
+      "confirm",
+      "continue",
+      "stop"
+    ]
+  },
+  "E4_gates": {
+    "attempts": [
+      {
+        "attempt": "无素材直接归档",
+        "expectation": "应 CONFIRM 或 STOP,不得写 profile",
+        "results": [
+          {
+            "action": "profile.archive",
+            "decision": "ask",
+            "reasoning": "2 rules triggered"
+          }
+        ],
+        "profile_written": false,
+        "final_stage": "ARCHAEOLOGY"
+      },
+      {
+        "attempt": "无身份直接生成",
+        "expectation": "应拒绝(阶段不符)",
+        "results": [
+          {
+            "action": "proposal.confirm",
+            "decision": "ask",
+            "reasoning": "1 rules triggered"
+          }
+        ],
+        "profile_written": false,
+        "final_stage": "ARCHAEOLOGY"
+      },
+      {
+        "attempt": "无完整歌曲直接确认作品",
+        "expectation": "应拒绝或被门禁拦住",
+        "results": [
+          {
+            "action": "review.approve",
+            "decision": "ask",
+            "reasoning": "1 rules triggered"
+          }
+        ],
+        "profile_written": false,
+        "final_stage": "ARCHAEOLOGY"
+      },
+      {
+        "attempt": "不存在的槽位",
+        "expectation": "应 ASK,不得自行挑一个",
+        "results": [
+          {
+            "action": "clip.select",
+            "decision": "ask",
+            "reasoning": "1 rules triggered"
+          }
+        ],
+        "profile_written": false,
+        "final_stage": "ARCHAEOLOGY"
+      }
+    ],
+    "policy_level_tested": true
+  },
+  "E5_fault_injection": {
+    "kill_points": [
+      {
+        "killed_after_step": 2,
+        "stage_at_kill": "ARCHAEOLOGY",
+        "facts_at_kill": 2,
+        "facts_after_recovery": 2,
+        "facts_lost": false,
+        "final_stage": "ARCHIVE",
+        "profile_written": true
+      },
+      {
+        "killed_after_step": 4,
+        "stage_at_kill": "VARIABLE_SETUP",
+        "facts_at_kill": 2,
+        "facts_after_recovery": 2,
+        "facts_lost": false,
+        "final_stage": "ARCHIVE",
+        "profile_written": true
+      },
+      {
+        "killed_after_step": 6,
+        "stage_at_kill": "HIGHLIGHT_REVIEW",
+        "facts_at_kill": 2,
+        "facts_after_recovery": 2,
+        "facts_lost": false,
+        "final_stage": "ARCHIVE",
+        "profile_written": true
+      },
+      {
+        "killed_after_step": 7,
+        "stage_at_kill": "FULL_REVIEW",
+        "facts_at_kill": 2,
+        "facts_after_recovery": 2,
+        "facts_lost": false,
+        "final_stage": "ARCHIVE",
+        "profile_written": true
+      }
+    ]
+  },
+  "E6_tool_failure": {
+    "scenarios": [
+      {
+        "scenario": "全部失败",
+        "expected_status": "FAILED",
+        "actual_status": "FAILED",
+        "clip_statuses": [
+          "FAILED",
+          "FAILED",
+          "FAILED"
+        ],
+        "stage_after": "PROPOSAL_REVIEW",
+        "errors_recorded": [
+          "simulated hard failure",
+          "simulated hard failure",
+          "simulated hard failure"
+        ]
+      },
+      {
+        "scenario": "部分失败(1/3)",
+        "expected_status": "READY_WITH_FAILURES",
+        "actual_status": "READY_WITH_FAILURES",
+        "clip_statuses": [
+          "READY",
+          "FAILED",
+          "READY"
+        ],
+        "stage_after": "HIGHLIGHT_REVIEW",
+        "errors_recorded": [
+          "simulated slot B failure"
+        ]
+      }
+    ]
+  },
+  "E7_regression": {
+    "exit_code": 0,
+    "passed": 213,
+    "skipped": 2,
+    "failed": 0,
+    "summary": "213 passed, 2 skipped in 28.57s"
+  },
+  "E8_decoupling": {
+    "decisions": [
+      {
+        "step": "s1",
+        "decision": "continue",
+        "stage": "ARCHAEOLOGY"
+      },
+      {
+        "step": "s2",
+        "decision": "continue",
+        "stage": "ARCHAEOLOGY"
+      },
+      {
+        "step": "s3",
+        "decision": "continue",
+        "stage": "IDENTITY_FITTING"
+      },
+      {
+        "step": "s4",
+        "decision": "continue",
+        "stage": "VARIABLE_SETUP"
+      },
+      {
+        "step": "s5",
+        "decision": "continue",
+        "stage": "PROPOSAL_REVIEW"
+      },
+      {
+        "step": "s6",
+        "decision": "continue",
+        "stage": "HIGHLIGHT_REVIEW"
+      },
+      {
+        "step": "s7",
+        "decision": "continue",
+        "stage": "FULL_REVIEW"
+      }
+    ],
+    "adapter": "YuE2StyleAdapter"
+  },
+  "E9_mutation": {
+    "mutations": [
+      {
+        "mutation": "rubber_stamp(所有输入→continue)",
+        "assertion": "E3-01 决策区分度",
+        "mutation_detected": true,
+        "detail": "变异后决策种类降到 2;E3-01 通过=False"
+      },
+      {
+        "mutation": "disable ARCHAEOLOGY.is_complete",
+        "assertion": "E4-01 门禁:0 条素材不算完成",
+        "mutation_detected": true,
+        "detail": "0 条素材时 is_complete 被改成 True"
+      },
+      {
+        "mutation": "clear FORBIDDEN_PATTERNS",
+        "assertion": "E3-02 voice clone 必被 STOP",
+        "mutation_detected": true,
+        "detail": "清空红线后 forbidden=False"
+      }
+    ]
+  },
+  "E10_hard_recovery": [
+    {
+      "kill_after_step": 2,
+      "child_exit_code": -9,
+      "killed_by_sigkill": true,
+      "child_output_tail": "[p1] SIGKILL self at step 2",
+      "stage_at_kill": "ARCHAEOLOGY",
+      "facts_at_kill": 2,
+      "facts_after_recovery": 2,
+      "facts_lost": false,
+      "final_stage": "ARCHIVE",
+      "profile_written": true
+    },
+    {
+      "kill_after_step": 4,
+      "child_exit_code": -9,
+      "killed_by_sigkill": true,
+      "child_output_tail": "[p1] SIGKILL self at step 4",
+      "stage_at_kill": "VARIABLE_SETUP",
+      "facts_at_kill": 2,
+      "facts_after_recovery": 2,
+      "facts_lost": false,
+      "final_stage": "ARCHIVE",
+      "profile_written": true
+    },
+    {
+      "kill_after_step": 6,
+      "child_exit_code": -9,
+      "killed_by_sigkill": true,
+      "child_output_tail": "[p1] SIGKILL self at step 6",
+      "stage_at_kill": "HIGHLIGHT_REVIEW",
+      "facts_at_kill": 2,
+      "facts_after_recovery": 2,
+      "facts_lost": false,
+      "final_stage": "ARCHIVE",
+      "profile_written": true
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "E1-01",
+      "category": "flow",
+      "statement": "9 步全部走完且 stage 到达 ARCHIVE",
+      "expected": "ARCHIVE",
+      "actual": "ARCHIVE",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "ledger_rev": 12,
+        "db": "/run/csi/mount-root/nas/eab0d61a99b6696edb3d2aff87b585e8/voice-persona-assessment/agent/soundmirror/evidence/artifacts/db_e1_flow.sqlite"
+      }
+    },
+    {
+      "claim_id": "E1-02",
+      "category": "flow",
+      "statement": "archaeology_facts 累积 2 条",
+      "expected": 2,
+      "actual": 2,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts": [
+          {
+            "text": "海边六点的柴油味",
+            "ts": 1791204902.651754
+          },
+          {
+            "text": "妈妈电话里的咳嗽",
+            "ts": 1791204902.7725532
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E1-03",
+      "category": "flow",
+      "statement": "persona 选择被记录",
+      "expected": 1,
+      "actual": 1,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "selections": [
+          {
+            "action": "keep",
+            "slot": "A"
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E1-04",
+      "category": "flow",
+      "statement": "music_spec 4 字段齐全(bpm/key/genre/instruments)",
+      "expected": true,
+      "actual": {
+        "bpm": true,
+        "key": true,
+        "genre": true,
+        "instruments": true
+      },
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "music_spec": {
+          "bpm": 88,
+          "key": "C",
+          "genre": "indie",
+          "instruments": [
+            "piano",
+            "ambient pad"
+          ]
+        }
+      }
+    },
+    {
+      "claim_id": "E1-05",
+      "category": "flow",
+      "statement": "歌词提案已生成且 ≥ 30 字符",
+      "expected": true,
+      "actual": 46,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "lyrics": "[verse]\n海边六点的柴油味\n妈妈电话里的咳嗽\n\n[chorus]\n你不在 但影子还在\n"
+      }
+    },
+    {
+      "claim_id": "E1-06",
+      "category": "flow",
+      "statement": "生成了 3 个高亮候选且全部 READY",
+      "expected": 3,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "clips": [
+          {
+            "slot": "A",
+            "status": "READY",
+            "node_id": "mock_node_7aa8ca98ff92"
+          },
+          {
+            "slot": "B",
+            "status": "READY",
+            "node_id": "mock_node_d6d02c0fd11f"
+          },
+          {
+            "slot": "C",
+            "status": "READY",
+            "node_id": "mock_node_d1b77172fba4"
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E1-07",
+      "category": "flow",
+      "statement": "完整歌曲文件路径已落库",
+      "expected": true,
+      "actual": true,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "full_song_path": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3"
+      }
+    },
+    {
+      "claim_id": "E1-08",
+      "category": "flow",
+      "statement": "完整歌曲 sha256 已校验入库",
+      "expected": true,
+      "actual": "3f17fe51fee63bfb",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "sha256": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c"
+      }
+    },
+    {
+      "claim_id": "E1-09",
+      "category": "flow",
+      "statement": "profile 归档仅在 confirm_risk=True 后写入",
+      "expected": true,
+      "actual": true,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "archived_at": 1791204907.139109
+      }
+    },
+    {
+      "claim_id": "E1-10",
+      "category": "trace",
+      "statement": "每一步决策都落盘到 SQLite trace 表(可溯源)",
+      "expected": 9,
+      "actual": 9,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "trace_db": "/run/csi/mount-root/nas/eab0d61a99b6696edb3d2aff87b585e8/voice-persona-assessment/agent/soundmirror/evidence/artifacts/db_e1_trace.sqlite",
+        "rows": 9
+      }
+    },
+    {
+      "claim_id": "E1-11",
+      "category": "trace",
+      "statement": "trace 行包含完整决策 + 工具调用 + 证据 + 风险",
+      "expected": 9,
+      "actual": 9,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "sample_keys": [
+          "decision",
+          "decision_json",
+          "evidence",
+          "evidence_json",
+          "finished_at",
+          "input",
+          "input_json",
+          "notes",
+          "notes_json",
+          "revision_after",
+          "revision_before",
+          "risk"
+        ]
+      }
+    },
+    {
+      "claim_id": "E1-12",
+      "category": "trace",
+      "statement": "触发工具的步骤在 trace 中有工具调用明细",
+      "expected": 2,
+      "actual": 2,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "tool_step_indices": [
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "claim_id": "E1-13",
+      "category": "trace",
+      "statement": "返回的 AgentDecision 对象自带 tool_calls(UI 需要它显示 loading)",
+      "expected": 2,
+      "actual": 2,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "steps_with_tools": [
+          "S6",
+          "S7"
+        ],
+        "note": "S6=generate_candidates, S7=generate_full"
+      }
+    },
+    {
+      "claim_id": "E1-14",
+      "category": "trace",
+      "statement": "decision 与 trace 的工具调用计数一致(无遗漏)",
+      "expected": 2,
+      "actual": 2,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "trace_total": 2,
+        "decision_total": 2
+      }
+    },
+    {
+      "claim_id": "E2-01",
+      "category": "artifact",
+      "statement": "3 个高亮 preview 文件全部真实存在于磁盘",
+      "expected": 3,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "paths": [
+          "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_7aa8ca98ff92_preview.mp3",
+          "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_d6d02c0fd11f_preview.mp3",
+          "/tmp/soundmirror/highlight/cs_745088aabad8/mock_node_d1b77172fba4_preview.mp3"
+        ]
+      }
+    },
+    {
+      "claim_id": "E2-02",
+      "category": "artifact",
+      "statement": "3 个 preview 音频时长接近 30s(用 ffprobe 实测,非字节数推测)",
+      "expected": "30s ± 2s",
+      "actual": [
+        30.07,
+        30.07,
+        30.07
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "durations": [
+          30.07,
+          30.07,
+          30.07
+        ],
+        "sizes": [
+          30518,
+          30570,
+          30622
+        ]
+      }
+    },
+    {
+      "claim_id": "E2-03",
+      "category": "artifact",
+      "statement": "3 个 preview 的 sha256 各不相同(真独立生成)",
+      "expected": true,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "hashes": [
+          "c7b7a31f226baa99",
+          "6ce0959f446f20f0",
+          "588aa20835fc5a23"
+        ]
+      }
+    },
+    {
+      "claim_id": "E2-04",
+      "category": "artifact",
+      "statement": "文件头验证为合法 MP3(ID3 或 frame sync)",
+      "expected": true,
+      "actual": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "magic_bytes_ok": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "claim_id": "E2-05",
+      "category": "artifact",
+      "statement": "完整歌曲音频时长 ≥ 60s 且比 preview 长(确实是完整作品而非片段)",
+      "expected": ">=60s",
+      "actual": 90.07,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "path": "/tmp/soundmirror/full/cs_745088aabad8/mock_full_d1b4745d9131.mp3",
+        "duration_sec": 90.07
+      }
+    },
+    {
+      "claim_id": "E2-06",
+      "category": "artifact",
+      "statement": "DB 中记录的 sha256 与磁盘实际一致",
+      "expected": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c",
+      "actual": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "disk": "3f17fe51fee63bfb",
+        "db": "3f17fe51fee63bfb"
+      }
+    },
+    {
+      "claim_id": "E3-01",
+      "category": "discrimination",
+      "statement": "20 个不同输入产生至少 4 种不同决策(证明不是橡皮章)",
+      "expected": ">=4",
+      "actual": 4,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "distinct_decisions": [
+          "ask",
+          "confirm",
+          "continue",
+          "stop"
+        ],
+        "note": "escalate/retry 由 E6/E8 覆盖,不在本探针集自然触发"
+      }
+    },
+    {
+      "claim_id": "E3-02",
+      "category": "discrimination",
+      "statement": "voice clone / impersonation 全部被 STOP",
+      "expected": "stop",
+      "actual": [
+        "stop",
+        "stop"
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "probes": [
+          "合规红线-克隆",
+          "合规红线-模仿"
+        ]
+      }
+    },
+    {
+      "claim_id": "E3-03",
+      "category": "discrimination",
+      "statement": "信息不足时主动 ASK 而非瞎猜",
+      "expected": "ask",
+      "actual": [
+        "ask",
+        "ask"
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "probes": [
+          "空输入",
+          "单字符"
+        ]
+      }
+    },
+    {
+      "claim_id": "E3-04",
+      "category": "discrimination",
+      "statement": "未知 action 被拒绝而非静默忽略",
+      "expected": "stop|escalate",
+      "actual": "stop",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "decision": "stop"
+      }
+    },
+    {
+      "claim_id": "E3-05",
+      "category": "discrimination",
+      "statement": "profile.archive 无确认时被 CONFIRM 拦截",
+      "expected": "confirm",
+      "actual": "confirm",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "decision": "confirm"
+      }
+    },
+    {
+      "claim_id": "E3-06",
+      "category": "discrimination",
+      "statement": "显式 confirm_risk=True 后放行(不会死循环确认)",
+      "expected": "not confirm",
+      "actual": "continue",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "decision": "continue"
+      }
+    },
+    {
+      "claim_id": "E4-01",
+      "category": "gate",
+      "statement": "stage_policy:0 条素材时 ARCHAEOLOGY.is_complete=False",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts": [],
+        "note": "直接测纯函数,不依赖端到端"
+      }
+    },
+    {
+      "claim_id": "E4-02",
+      "category": "gate",
+      "statement": "stage_policy:2 条合规素材(各 >= 4 字)时 ARCHAEOLOGY.is_complete=True",
+      "expected": true,
+      "actual": true,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts": [
+          "海边六点的柴油味",
+          "妈妈电话里的咳嗽"
+        ]
+      }
+    },
+    {
+      "claim_id": "E4-09",
+      "category": "gate",
+      "statement": "stage_policy:仅 1 条素材时不算完成",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts_count": 1
+      }
+    },
+    {
+      "claim_id": "E4-10",
+      "category": "gate",
+      "statement": "stage_policy:2 条但过短(各 2 字)时不算完成 —— 质量门槛生效",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts": [
+          "海边",
+          "电话"
+        ],
+        "min_len_rule": 4
+      }
+    },
+    {
+      "claim_id": "E4-03",
+      "category": "gate",
+      "statement": "stage_policy:无歌词时 PROPOSAL_REVIEW.is_complete=False",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "current_proposal": null
+      }
+    },
+    {
+      "claim_id": "E4-04",
+      "category": "gate",
+      "statement": "stage_policy:无 clips 时 HIGHLIGHT_REVIEW.is_complete=False",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "highlight_clips": []
+      }
+    },
+    {
+      "claim_id": "E4-05",
+      "category": "gate",
+      "statement": "stage_policy:无 profile 时 ARCHIVE.is_complete=False",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "personal_style_profile": null
+      }
+    },
+    {
+      "claim_id": "E4-06",
+      "category": "gate",
+      "statement": "stage_policy:ARCHAEOLOGY 未完成时 IDENTITY_FITTING.can_enter=False",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts": 0,
+        "note": "can_enter 依赖上一阶段完成条件"
+      }
+    },
+    {
+      "claim_id": "E4-07",
+      "category": "gate",
+      "statement": "端到端:未满足前置条件时 profile 不被写入",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "attempt": "无素材直接归档",
+        "results": [
+          {
+            "action": "profile.archive",
+            "decision": "ask",
+            "reasoning": "2 rules triggered"
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E4-08",
+      "category": "gate",
+      "statement": "端到端:请求不存在的槽位时 Agent 不自行挑选",
+      "expected": "ask|stop|escalate|confirm",
+      "actual": [
+        "ask"
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "decisions": [
+          "ask"
+        ]
+      }
+    },
+    {
+      "claim_id": "E5-01",
+      "category": "recovery",
+      "statement": "4 个 kill 时点全部不丢已有素材",
+      "expected": 4,
+      "actual": 4,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "detail": [
+          {
+            "kill_after": 2,
+            "facts": "2→2"
+          },
+          {
+            "kill_after": 4,
+            "facts": "2→2"
+          },
+          {
+            "kill_after": 6,
+            "facts": "2→2"
+          },
+          {
+            "kill_after": 7,
+            "facts": "2→2"
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E5-02",
+      "category": "recovery",
+      "statement": "kill 后能恢复到 ARCHIVE 并完成归档",
+      "expected": 4,
+      "actual": 4,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "final_stages": [
+          "ARCHIVE",
+          "ARCHIVE",
+          "ARCHIVE",
+          "ARCHIVE"
+        ]
+      }
+    },
+    {
+      "claim_id": "E6-01",
+      "category": "failure",
+      "statement": "全部失败时 generation_status=FAILED(不谎报成功)",
+      "expected": "FAILED",
+      "actual": "FAILED",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "clip_statuses": [
+          "FAILED",
+          "FAILED",
+          "FAILED"
+        ]
+      }
+    },
+    {
+      "claim_id": "E6-02",
+      "category": "failure",
+      "statement": "全部失败时不得进入 HIGHLIGHT_REVIEW 假装有货",
+      "expected": "not HIGHLIGHT_REVIEW",
+      "actual": "PROPOSAL_REVIEW",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "stage": "PROPOSAL_REVIEW"
+      }
+    },
+    {
+      "claim_id": "E6-03",
+      "category": "failure",
+      "statement": "部分失败时降级为 READY_WITH_FAILURES 并记录错误",
+      "expected": {
+        "status": "READY_WITH_FAILURES",
+        "has_error": true
+      },
+      "actual": {
+        "status": "READY_WITH_FAILURES",
+        "has_error": true
+      },
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "clip_statuses": [
+          "READY",
+          "FAILED",
+          "READY"
+        ],
+        "errors": [
+          "simulated slot B failure"
+        ]
+      }
+    },
+    {
+      "claim_id": "E7-01",
+      "category": "regression",
+      "statement": "老测试套件全部通过(无回归)",
+      "expected": {
+        "exit_code": 0,
+        "failed": 0
+      },
+      "actual": {
+        "exit_code": 0,
+        "failed": 0,
+        "passed": 213,
+        "skipped": 2
+      },
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "summary_line": "213 passed, 2 skipped in 28.57s"
+      }
+    },
+    {
+      "claim_id": "E8-01",
+      "category": "decoupling",
+      "statement": "替换为完全不同的 Tool 实现后流程照常跑到 FULL_REVIEW(S7 已选片段)",
+      "expected": "FULL_REVIEW",
+      "actual": "FULL_REVIEW",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "decisions": [
+          {
+            "step": "s1",
+            "decision": "continue",
+            "stage": "ARCHAEOLOGY"
+          },
+          {
+            "step": "s2",
+            "decision": "continue",
+            "stage": "ARCHAEOLOGY"
+          },
+          {
+            "step": "s3",
+            "decision": "continue",
+            "stage": "IDENTITY_FITTING"
+          },
+          {
+            "step": "s4",
+            "decision": "continue",
+            "stage": "VARIABLE_SETUP"
+          },
+          {
+            "step": "s5",
+            "decision": "continue",
+            "stage": "PROPOSAL_REVIEW"
+          },
+          {
+            "step": "s6",
+            "decision": "continue",
+            "stage": "HIGHLIGHT_REVIEW"
+          },
+          {
+            "step": "s7",
+            "decision": "continue",
+            "stage": "FULL_REVIEW"
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E8-02",
+      "category": "decoupling",
+      "statement": "新后端的产物被正确记录(node_id / url / hash)",
+      "expected": "yue2_1..3",
+      "actual": [
+        "yue2_1",
+        "yue2_2",
+        "yue2_3"
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "clips": [
+          {
+            "slot": "A",
+            "node_id": "yue2_1",
+            "url": "https://yue2.example/1"
+          },
+          {
+            "slot": "B",
+            "node_id": "yue2_2",
+            "url": "https://yue2.example/2"
+          },
+          {
+            "slot": "C",
+            "node_id": "yue2_3",
+            "url": "https://yue2.example/3"
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "E8-03",
+      "category": "decoupling",
+      "statement": "is_mock=False 被如实记录(不谎称 mock)",
+      "expected": false,
+      "actual": false,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "is_mock_flags": [
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "claim_id": "E9-01",
+      "category": "mutation",
+      "statement": "变异测试:拆掉 ARCHAEOLOGY 完成条件 → 系统行为确实改变",
+      "expected": "gate behaviour changed",
+      "actual": "is_complete(0 facts)=True",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "note": "证明门禁是真实生效的代码路径,不是摆设"
+      }
+    },
+    {
+      "claim_id": "E9-02",
+      "category": "mutation",
+      "statement": "变异测试:清空合规红线 → voice clone 拦截确实失效",
+      "expected": "forbidden=False after mutation",
+      "actual": "forbidden=False",
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "note": "证明合规拦截是真实生效的,不是摆设"
+      }
+    },
+    {
+      "claim_id": "E9-03",
+      "category": "mutation",
+      "statement": "3 个变异全部被检测到(证明这些机制是真实生效的代码,不是摆设)",
+      "expected": 3,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "mutations": [
+          "rubber_stamp(所有输入→continue)",
+          "disable ARCHAEOLOGY.is_complete",
+          "clear FORBIDDEN_PATTERNS"
+        ],
+        "note": "变异测试:故意改坏 → 行为确实变化 → 证明原断言有区分力"
+      }
+    },
+    {
+      "claim_id": "E10-01",
+      "category": "hard-recovery",
+      "statement": "子进程确实被 SIGKILL(-9)杀死,不是正常退出",
+      "expected": 3,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "exit_codes": [
+          -9,
+          -9,
+          -9
+        ]
+      }
+    },
+    {
+      "claim_id": "E10-02",
+      "category": "hard-recovery",
+      "statement": "被 kill 的子进程已把数据落盘(有素材可保)",
+      "expected": 3,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "facts_at_kill": [
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "claim_id": "E10-03",
+      "category": "hard-recovery",
+      "statement": "kill 前素材在新进程里一条不丢",
+      "expected": [
+        2,
+        2,
+        2
+      ],
+      "actual": [
+        2,
+        2,
+        2
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "before": [
+          2,
+          2,
+          2
+        ],
+        "after": [
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "claim_id": "E10-04",
+      "category": "hard-recovery",
+      "statement": "新进程能接着跑完到 ARCHIVE 并归档",
+      "expected": 3,
+      "actual": 3,
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "final_stages": [
+          "ARCHIVE",
+          "ARCHIVE",
+          "ARCHIVE"
+        ]
+      }
+    },
+    {
+      "claim_id": "E10-05",
+      "category": "hard-recovery",
+      "statement": "恢复后没有产生重复 session(仍只有 1 个)",
+      "expected": [
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        1,
+        1,
+        1
+      ],
+      "status": "passed",
+      "passed": true,
+      "evidence": {
+        "note": "新进程应复用 kill 前的 session,而不是新建",
+        "detail": [
+          {
+            "kill_after": 2,
+            "session_count": 1
+          },
+          {
+            "kill_after": 4,
+            "session_count": 1
+          },
+          {
+            "kill_after": 6,
+            "session_count": 1
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total": 53,
+    "passed": 53,
+    "failed": 0,
+    "unverified": 0,
+    "verifiable": 53,
+    "pass_rate_of_verifiable": 1.0,
+    "pass_rate_overall": 1.0,
+    "by_category": {
+      "flow": {
+        "total": 9,
+        "passed": 9,
+        "failed": 0,
+        "unverified": 0
+      },
+      "trace": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "unverified": 0
+      },
+      "artifact": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "unverified": 0
+      },
+      "discrimination": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "unverified": 0
+      },
+      "gate": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "unverified": 0
+      },
+      "recovery": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "unverified": 0
+      },
+      "failure": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "unverified": 0
+      },
+      "regression": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "unverified": 0
+      },
+      "decoupling": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "unverified": 0
+      },
+      "mutation": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "unverified": 0
+      },
+      "hard-recovery": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "unverified": 0
+      }
+    }
+  },
+  "collected_at": "2026-10-05T12:56:25",
+  "duration_sec": 83.2
+}

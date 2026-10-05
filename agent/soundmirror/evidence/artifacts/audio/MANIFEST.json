@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "name": "highlight_preview_A.mp3",
+      "size_bytes": 30518,
+      "duration_sec": 30.066939,
+      "sha256": "c7b7a31f226baa996d3b4d2f917421425a100440bd79205bbd2d1eb36ef8cfb4",
+      "slot": "A"
+    },
+    {
+      "name": "highlight_preview_B.mp3",
+      "size_bytes": 30570,
+      "duration_sec": 30.066939,
+      "sha256": "6ce0959f446f20f0d7c3780326b68e020c7961663376c96c8b2dc7ea27ea8d7e",
+      "slot": "B"
+    },
+    {
+      "name": "highlight_preview_C.mp3",
+      "size_bytes": 30622,
+      "duration_sec": 30.066939,
+      "sha256": "588aa20835fc5a23e184cddb7596d13ea66640505a5abd8e4b9042fad3ddfba7",
+      "slot": "C"
+    },
+    {
+      "name": "full_song_A.mp3",
+      "size_bytes": 89875,
+      "duration_sec": 90.070204,
+      "sha256": "3f17fe51fee63bfb6ede75e81c162587b927a02a265800517afe2222c1e7920c",
+      "slot": "A"
+    }
+  ]
+}
